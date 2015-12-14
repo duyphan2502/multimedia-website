@@ -72,7 +72,7 @@ class ApiFileController extends BaseController
                         ];
                     }
                 }
-                /*Type if file*/
+                /*If type is file*/
                 else
                 {
                     if(!$is_dir)

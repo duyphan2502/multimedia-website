@@ -17,8 +17,8 @@
     <div class="portlet-body">
         <div my-data-table
              dr-total-items="vm.totalItems"
-             dr-items-per-page="vm.perPage"
-             dr-current-page="vm.currentPage"
+             dr-items-per-page="vm.allParams.per_page"
+             dr-current-page="vm.allParams.page"
              dr-pagination-changed="vm.paginationChanged()"
              dr-max-size="vm.maxSize"
              dr-per-page-changed="vm.perPageChanged()"
@@ -62,16 +62,16 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="text" class="form-control input-sm" placeholder="Search...">
+                            <input type="text" class="form-control input-sm" placeholder="Search..." ng-model="vm.allParams.global_title">
                         </td>
                         <td>
-                            <input type="text" class="form-control input-sm" placeholder="Search...">
+                            <input type="text" class="form-control input-sm" placeholder="Search..." ng-model="vm.allParams.global_slug">
                         </td>
                         <td></td>
                         <td></td>
                         <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-search"></i></button>
-                            <button class="btn btn-warning btn-xs"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-success btn-xs" ng-click="vm.handleSearch()"><i class="fa fa-search"></i></button>
+                            <button class="btn btn-warning btn-xs" ng-click="vm.clearSearch()"><i class="fa fa-times"></i></button>
                         </td>
                     </tr>
                     <tr ng-repeat="item in vm.pages">

@@ -203,6 +203,43 @@ abstract class AbstractModel extends Model
     }
 
     /**
+     * Search items. Accept params.
+     * @param $fields: ['field_1' => 'value_1', 'field_2' => 'value_2'].
+     * @param $order: [*order_by* => *order_type*].
+     * @param $multiple: get many items or just the first one.
+     * @param $perPage: how many items per page. If < 1, will return all items.
+     * @return mixed
+     **/
+    public static function searchBy($fields, $order = null, $multiple = false, $perPage = 0)
+    {
+        $obj = new static;
+        if($fields && is_array($fields))
+        {
+            foreach($fields as $key => $row)
+            {
+                $obj = $obj->where(function($q) use ($key, $row){
+                    $q->where($key, '=', $row);
+                    $q->orWhere($key, 'LIKE', '%'.$row.'%');
+                });
+            }
+        }
+        if($order && is_array($order))
+        {
+            foreach ($order as $key => $value)
+            {
+                $obj = $obj->orderBy($key, $value);
+            }
+        }
+
+        if($multiple)
+        {
+            if($perPage > 0) return $obj->paginate($perPage);
+            return $obj->get();
+        }
+        return $obj->first();
+    }
+
+    /**
      * Get item by id.
      * @param $id: id of item.
      * @return object

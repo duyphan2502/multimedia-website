@@ -24,7 +24,7 @@ class ApiPageController extends BaseController
     public function getIndex(Request $request)
     {
         $getByFields = $request->except(['page', 'per_page']);
-        $pages = Page::getBy($getByFields, ['created_at' => 'desc'], true, $request->get('per_page', 10));
+        $pages = Page::searchBy($getByFields, ['created_at' => 'desc'], true, $request->get('per_page', 10));
         $this->data = [
             'error' => false,
             'response_code' => 200,
