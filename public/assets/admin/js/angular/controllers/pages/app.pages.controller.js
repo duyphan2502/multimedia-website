@@ -112,6 +112,7 @@
 
         /*Handle search*/
         function handleSearch() {
+            vm.allParams.page = 1;
             getAllPages(vm.allParams);
         }
         function clearSearch() {
