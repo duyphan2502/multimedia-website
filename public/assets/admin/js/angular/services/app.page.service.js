@@ -28,7 +28,7 @@
         }
 
         function updateGlobal($id, $data, callback, callbackError) {
-            if($id && $id.isNumeric())
+            if($id && !isNaN(parseFloat($id)) && isFinite($id))
             {
                 return $http.post(baseApi + 'pages/edit-global/' + $id, $data).then(callback, callbackError);
             }

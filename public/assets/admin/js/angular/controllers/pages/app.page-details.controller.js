@@ -5,8 +5,8 @@
         .module('app')
         .controller('PageDetailsController', PageDetailsController);
 
-    PageDetailsController.$inject = ['$rootScope', '$scope', 'PageService', '$state', '$stateParams'];
-    function PageDetailsController($rootScope, $scope, PageService, $state, $stateParams) {
+    PageDetailsController.$inject = ['$rootScope', '$scope', 'PageService', '$state', '$stateParams', 'MyHelpers'];
+    function PageDetailsController($rootScope, $scope, PageService, $state, $stateParams, MyHelpers) {
         var vm = this;
 
         vm.updatePageContent = updatePageContent;
@@ -56,8 +56,10 @@
                 }, function(){
                     $rootScope.hideLoadingState();
                 });
+                MyHelpers.showNotification8(response.data.message, 'success');
             }, function(response){
                 $rootScope.hideLoadingState();
+                MyHelpers.showNotification8(response.data.message, 'error');
             });
         }
 

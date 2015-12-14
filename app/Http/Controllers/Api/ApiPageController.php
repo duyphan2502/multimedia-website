@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models;
 
 use App\Models\Page;
+use App\Models\PageContent;
 
 class ApiPageController extends BaseController
 {
@@ -22,7 +23,8 @@ class ApiPageController extends BaseController
 
     public function getIndex(Request $request)
     {
-        $pages = Page::getAll($request->get('page', 1), $request->get('per_page', 1));
+        $getByFields = $request->except(['page', 'per_page']);
+        $pages = Page::getBy($getByFields, ['created_at' => 'desc'], true, $request->get('per_page', 10));
         $this->data = [
             'error' => false,
             'response_code' => 200,
@@ -53,31 +55,32 @@ class ApiPageController extends BaseController
         return response()->json($this->data, $this->data['response_code']);
     }
 
-    public function postEditGlobal(Request $request, $id = null)
+    public function postEditGlobal(Request $request, Page $page, $id = null)
     {
         if($request->get('is_group_action') == true)
         {
-            return $this->_GroupAction($request);
+            return $this->_GroupAction($request, $page);
         }
         $data = $request->except(['is_group_action', '_group_action', 'ids']);
-        $result = Page::updatePage($id, $data);
+        /*Just update some fields, not create new*/
+        $result = $page->updatePage($id, $data, true);
         return response()->json($result, $result['response_code']);
     }
 
-    public function postEdit(Request $request, $id, $language)
+    public function postEdit(Request $request, Page $page, $id, $language)
     {
         $data = $request->all();
-        $result = Page::updatePageContent($id, $language, $data);
+        $result = $page->updatePageContent($id, $language, $data);
         return response()->json($result, $result['response_code']);
     }
 
-    public function deleteDelete(Request $request, $id)
+    public function deleteDelete(Request $request, Page $page, $id)
     {
-        $result = Page::deletePage($id);
+        $result = $page->deletePage($id);
         return response()->json($result, $result['response_code']);
     }
 
-    public function _GroupAction($request)
+    public function _GroupAction($request, $page)
     {
         $result = [
             'error' => true,
@@ -108,7 +111,8 @@ class ApiPageController extends BaseController
             } break;
         }
 
-        $result = Page::updatePages($ids, $data);
+        /*Just update some fields, not create new*/
+        $result = $page->updatePages($ids, $data, true);
         return response()->json($result, $result['response_code']);
     }
 }

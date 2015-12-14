@@ -4,7 +4,7 @@ namespace App\Models;
 use App\Models;
 
 use App\Models\AbstractModel;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 
 class Page extends AbstractModel
 {
@@ -21,13 +21,19 @@ class Page extends AbstractModel
 
     protected $primaryKey = 'id';
 
-    private static $acceptableEdit = [
+    protected $rules = [
+        'global_title' => 'required|max:255',
+        'global_slug' => 'required|max:255|unique:pages',
+        'status' => 'integer|required'
+    ];
+
+    private $acceptableEdit = [
         'global_title',
         'global_slug',
         'status'
     ];
 
-    private static $acceptableEditContent = [
+    private $acceptableEditContent = [
         'title',
         'slug',
         'language_id',
@@ -36,6 +42,17 @@ class Page extends AbstractModel
         'status',
         'thumbnail',
         'tags'
+    ];
+
+    protected $rulesEditContent = [
+        'title' => 'required|max:255',
+        'slug' => 'required|max:255|unique:page_contents',
+        'language_id' => 'min:1|integer|required',
+        'description' => 'max:1000',
+        'content' => 'max:5000|string',
+        'status' => 'integer|required',
+        'thumbnail' => 'string|max:255',
+        'tags' => 'string|max:255',
     ];
 
     public static function getPageById($id, $languageId = 0)
@@ -56,7 +73,7 @@ class Page extends AbstractModel
         ]);
     }
 
-    public static function updatePage($id, $data)
+    public function updatePage($id, $data, $justUpdateSomeFields = false)
     {
         $result = [
             'error' => true,
@@ -66,9 +83,15 @@ class Page extends AbstractModel
         $page = static::find($id);
         if(!$page) return $result;
 
+        $validate = $this->validateData($data, null, null, $justUpdateSomeFields);
+        if(!$validate && !$this->checkValueNotChange($page, $data))
+        {
+            return $this->getErrorsWithResponse();
+        }
+
         foreach($data as $key => $row)
         {
-            if(in_array($key, static::$acceptableEdit))
+            if(in_array($key, $this->acceptableEdit))
             {
                 $page->$key = $row;
 
@@ -88,8 +111,14 @@ class Page extends AbstractModel
         return $result;
     }
 
-    public static function updatePages($ids, $data)
+    public function updatePages($ids, $data, $justUpdateSomeFields = false)
     {
+        $validate = $this->validateData($data, null, null, $justUpdateSomeFields);
+        if(!$validate)
+        {
+            return $this->getErrorsWithResponse();
+        }
+
         $result = [
             'error' => true,
             'response_code' => 500,
@@ -97,7 +126,7 @@ class Page extends AbstractModel
         ];
         foreach($data as $key => $row)
         {
-            if(!in_array($key, static::$acceptableEdit))
+            if(!in_array($key, $this->acceptableEdit))
             {
                 unset($data[$key]);
             }
@@ -116,7 +145,7 @@ class Page extends AbstractModel
         return $result;
     }
 
-    public static function updatePageContent($id, $languageId, $data)
+    public function updatePageContent($id, $languageId, $data)
     {
         $result = [
             'error' => true,
@@ -127,9 +156,16 @@ class Page extends AbstractModel
         /*Update page content*/
         $pageContent = static::getPageContentByPageId($id, $languageId);
         if(!$pageContent) return $result;
+
+        $validate = $this->validateData($data, $this->rulesEditContent, null, true);
+        if(!$validate && !$this->checkValueNotChange($pageContent, $data))
+        {
+            return $this->getErrorsWithResponse();
+        }
+
         foreach($data as $keyContent => $rowContent)
         {
-            if(in_array($keyContent, static::$acceptableEditContent))
+            if(in_array($keyContent, $this->acceptableEditContent))
             {
                 $pageContent->$keyContent = $rowContent;
 

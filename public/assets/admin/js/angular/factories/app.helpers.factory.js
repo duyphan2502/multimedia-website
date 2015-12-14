@@ -89,6 +89,10 @@
                 {
                     $type = 'ruby';
                 } break;
+                case 'error':
+                {
+                    $type = 'ruby';
+                } break;
                 default:
                 {
                     $type = 'ebony';

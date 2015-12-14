@@ -12,8 +12,16 @@
         vm.pages = [];
 
         vm.getStatus = getStatus;
+        vm.showUpdateField = showUpdateField;
         vm.updateStatus = updateStatus;
+        vm.cancelUpdate = cancelUpdate;
+        vm.confirmUpdate = confirmUpdate;
         vm.deletePage = deletePage;
+
+        /*Fast edit page*/
+        vm.isEditing = false;
+        vm.currentSelectedItem = null;
+        vm.fastEditData = {};
 
         /*Pagination*/
         vm.paginationChanged = paginationChanged;
@@ -128,6 +136,42 @@
             }
         }
 
+        function showUpdateField(item) {
+            vm.isEditing = true;
+            vm.currentSelectedItem = item;
+            vm.fastEditData = {
+                global_title: item.global_title,
+                global_slug: item.global_slug
+            }
+        }
+
+        function cancelUpdate() {
+            vm.isEditing = false;
+            vm.currentSelectedItem = null;
+            vm.fastEditData = {};
+        }
+
+        function confirmUpdate() {
+            updatePage(vm.currentSelectedItem.id, vm.fastEditData);
+        }
+
+        function updatePage($id, $data) {
+            $rootScope.showLoadingState();
+            PageService.updateGlobal($id, $data, function (response) {
+                getAllPages({
+                    page: vm.currentPage,
+                    per_page: vm.perPage
+                });
+                vm.isEditing = false;
+                vm.currentSelectedItem = null;
+                vm.fastEditData = {};
+                MyHelpers.showNotification8(response.data.message, 'success');
+            }, function (response) {
+                $rootScope.hideLoadingState();
+                MyHelpers.showNotification8(response.data.message, 'error');
+            });
+        }
+
         function updateStatus($id, $status) {
             var $data = {
                 status: $status
@@ -138,8 +182,10 @@
                     page: vm.currentPage,
                     per_page: vm.perPage
                 });
+                MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
                 $rootScope.hideLoadingState();
+                MyHelpers.showNotification8(response.data.message, 'error');
             });
         }
 
@@ -150,8 +196,10 @@
                     page: vm.currentPage,
                     per_page: vm.perPage
                 });
+                MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
                 $rootScope.hideLoadingState();
+                MyHelpers.showNotification8(response.data.message, 'error');
             });
         }
 
@@ -162,13 +210,14 @@
 
         /*When user select all items => change scope checkedAllItems to true*/
         function changeSelect() {
-            MyHelpers.changeSelectDataTable(vm.pages, vm.selectedItems, function(){
+            MyHelpers.changeSelectDataTable(vm.pages, vm.selectedItems, function () {
                 vm.checkedAllItems = true;
-            }, function(){
+            }, function () {
                 vm.checkedAllItems = false;
             });
         }
 
+        /*Handle group actions*/
         function handleGroupActions() {
             $rootScope.showLoadingState();
             PageService.updateGlobal(null, {
