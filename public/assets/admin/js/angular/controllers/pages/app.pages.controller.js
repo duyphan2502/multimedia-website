@@ -116,8 +116,8 @@
             getAllPages(vm.allParams);
         }
         function clearSearch() {
-            delete vm.allParams.global_title;
-            delete vm.allParams.global_slug;
+            vm.allParams.global_title = undefined;
+            vm.allParams.global_slug = undefined;
             perPageChanged();
         }
 
