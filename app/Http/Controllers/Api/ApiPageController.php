@@ -82,15 +82,12 @@ class ApiPageController extends BaseController
 
     public function _GroupAction($request, $page)
     {
-        $result = [
-            'error' => true,
-            'response_code' => 500,
-            'message' => 'Some error occurred!'
-        ];
+        $this->data['message'] = 'Some error occurred!';
+
 
         $ids = $request->get('ids');
 
-        if(!$ids) return response()->json($result, $result['response_code']);
+        if(!$ids) return response()->json($this->data, $this->data['response_code']);
 
         $data = [];
         switch($request->get('_group_action'))
@@ -106,13 +103,13 @@ class ApiPageController extends BaseController
             default:
             {
                 /*No action*/
-                $result['message'] = 'Not allowed task.';
-                return response()->json($result, $result['response_code']);
+                $this->data['message'] = 'Not allowed task.';
+                return response()->json($this->data, $this->data['response_code']);
             } break;
         }
 
         /*Just update some fields, not create new*/
-        $result = $page->updatePages($ids, $data, true);
-        return response()->json($result, $result['response_code']);
+        $this->data = $page->updatePages($ids, $data, true);
+        return response()->json($this->data, $this->data['response_code']);
     }
 }

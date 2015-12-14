@@ -5,7 +5,6 @@ use App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
 
 abstract class AbstractModel extends Model
 {
@@ -37,8 +36,17 @@ abstract class AbstractModel extends Model
     ];
 
     private $errors = null;
+
     protected $rules = array();
 
+    /**
+     * Validate data when update or create.
+     * @param $data: ['field_1' => 'value_1', 'field_2' => 'value_2'].
+     * @param $rules: the rules to validate.
+     * @param $customValidateMessages: custom message for error handle.
+     * @param $justUpdateSomeFields: if true, just validate items that exists in $data.
+     * @return bool
+     **/
     public function validateData($data, $rules = null, $customValidateMessages = null, $justUpdateSomeFields = false)
     {
         if(!$rules) $rules = $this->rules;
@@ -47,7 +55,6 @@ abstract class AbstractModel extends Model
         if($result->fails())
         {
             $this->errors = $result->messages()->toArray();
-            /*Just update some fields. If set to false, it will always check all rules.*/
             if($justUpdateSomeFields == true)
             {
                 $messages = [];
@@ -67,6 +74,10 @@ abstract class AbstractModel extends Model
         return true;
     }
 
+    /**
+     * Get all validate errors, no key.
+     * @return array
+     **/
     public function getErrors()
     {
         $messages = [];
@@ -80,18 +91,32 @@ abstract class AbstractModel extends Model
         return $messages;
     }
 
+    /**
+     * Get all validate errors, with the key of errors.
+     * @return array
+     **/
     public function getErrorsWithKey()
     {
         return $this->errors;
     }
 
+    /**
+     * Get all validate errors, with error state and http response code.
+     * @return array
+     **/
     public function getErrorsWithResponse()
     {
         $result = [
-            'error' => true,
-            'response_code' => 500,
-            'message' => $this->getErrors()
+            'error' => false,
+            'response_code' => 200
         ];
+        $message = $this->getErrors();
+        if($message)
+        {
+            $result['error'] = true;
+            $result['response_code'] = 500;
+            $result['message'] = $message;
+        }
         return $result;
     }
 
@@ -113,7 +138,8 @@ abstract class AbstractModel extends Model
     }
 
     /**
-     * Find or create (by specified field)
+     * Find item by fields. If not exists => create a new one.
+     * @param $options: ['field_1' => 'value_1', 'field_2' => 'value_2'].
      * @return mixed
      **/
     public static function findByFieldOrCreate($options)
@@ -122,6 +148,12 @@ abstract class AbstractModel extends Model
         return $obj ?: new static;
     }
 
+    /**
+     * Get all items. No params. Just accept order and per_page
+     * @param $order: [*order_by* => *order_type*]
+     * @param $perPage: how many items per page. If < 1, will return all items.
+     * @return mixed
+     **/
     public static function getAll($order = null, $perPage = 0)
     {
         $query = new static;
@@ -139,12 +171,14 @@ abstract class AbstractModel extends Model
         return $query->paginate($perPage);
     }
 
-    public static function getById($id)
-    {
-        $obj = static::where('id', '=', $id)->first();
-        return $obj;
-    }
-
+    /**
+     * Get items. Accept params.
+     * @param $fields: ['field_1' => 'value_1', 'field_2' => 'value_2'].
+     * @param $order: [*order_by* => *order_type*].
+     * @param $multiple: get many items or just the first one.
+     * @param $perPage: how many items per page. If < 1, will return all items.
+     * @return mixed
+     **/
     public static function getBy($fields, $order = null, $multiple = false, $perPage = 0)
     {
         $obj = new static;
@@ -166,5 +200,16 @@ abstract class AbstractModel extends Model
             return $obj->get();
         }
         return $obj->first();
+    }
+
+    /**
+     * Get item by id.
+     * @param $id: id of item.
+     * @return object
+     **/
+    public static function getById($id)
+    {
+        $obj = static::where('id', '=', $id)->first();
+        return $obj;
     }
 }
