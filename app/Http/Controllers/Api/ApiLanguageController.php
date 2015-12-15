@@ -12,6 +12,7 @@ class ApiLanguageController extends BaseController
     public function __construct()
     {
         parent::__construct();
+        $this->middleware('auth');
         $this->data = [
             'error' => true,
             'response_code' => 500

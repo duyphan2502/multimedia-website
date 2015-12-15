@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -23,6 +24,11 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    var $username = 'email';
+    var $loginPath = 'auth';
+    var $redirectTo = '/admin';
+    var $redirectPath = '/admin';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -30,7 +36,14 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        parent::__construct();
+
+        $this->middleware('guest', ['except' => ['getLogout', 'postLogin', 'postIndex']]);
+
+        $this->responseData = [
+            'error' => true,
+            'response_code' => 401
+        ];
     }
 
     /**
@@ -42,7 +55,6 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -61,5 +73,25 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function authenticated()
+    {
+        $this->responseData = [
+            'error' => false,
+            'response_code' => 200,
+            'accessToken' => csrf_token()
+        ];
+        return response()->json($this->responseData, $this->responseData['response_code']);
+    }
+
+    public function getIndex()
+    {
+        dd('xxxx');
+    }
+
+    public function postIndex(Request $request)
+    {
+        return $this->postLogin($request);
     }
 }

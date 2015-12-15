@@ -9,12 +9,14 @@ use App\Models;
 
 use App\Models\Page;
 use App\Models\PageContent;
+use Illuminate\Support\Facades\Auth;
 
 class ApiPageController extends BaseController
 {
     public function __construct()
     {
         parent::__construct();
+        $this->middleware('auth');
         $this->data = [
             'error' => true,
             'response_code' => 500

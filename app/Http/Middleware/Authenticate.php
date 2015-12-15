@@ -2,6 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models;
+
+use Illuminate\Support\Facades\Auth;
+
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -34,14 +38,30 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('auth/login');
+        if($request->ajax())
+        {
+            $authorization = substr($request->header('authorization'), 6);
+            if($authorization)
+            {
+                $userData = json_decode(base64_decode($authorization));
+
+                if(Auth::attempt(['email' => $userData->email, 'password' => $userData->password]))
+                {
+                    Auth::logout();
+                    return $next($request);
+                }
             }
+            return response()->json([
+                'error' => true,
+                'response_code' => 401,
+                'message' => 'You need to login to access this page.'
+            ], 401);
         }
 
+        if ($this->auth->guest())
+        {
+            return redirect()->guest('auth/login');
+        }
         return $next($request);
     }
 }

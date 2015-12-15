@@ -12,8 +12,16 @@
             'ngSanitize',
             'mwl.confirm'
         ])
+        .config(configHttp)
         .config(config)
         .run(run);
+
+    configHttp.$inject = ['$httpProvider'];
+    function configHttp($httpProvider) {
+        $httpProvider.defaults.headers.common['Authorization'] = 'Basic';
+        /*Always send ajax*/
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    }
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
     function config($stateProvider, $urlRouterProvider) {

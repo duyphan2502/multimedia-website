@@ -12,24 +12,11 @@ class ApiUserController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->data = [
-            'error' => true,
-            'response_code' => 401
-        ];
+        $this->middleware('auth', ['except' => ['postAuthenticate']]);
     }
 
     public function postAuthenticate(Request $request)
     {
-        $user = Models\User::getUserByEmail($request->get('email'));
-        /*If user not exists or wrong password*/
-        if(!$user || !\Hash::check($request->get('password'), $user->password))
-        {
-            return response()->json($this->data, $this->data['response_code']);
-        }
-        $this->data = [
-            'error' => false,
-            'response_code' => 200
-        ];
-        return response()->json($this->data, $this->data['response_code']);
+        return $this->authenticateUser($request);
     }
 }

@@ -15,38 +15,38 @@
     <meta content="" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     {{--<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>--}}
-    <link href="{{ url('theme/admin/assets/global/plugins/font-awesome/css/font-awesome.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url('theme/admin/assets/global/plugins/simple-line-icons/simple-line-icons.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url('theme/admin/assets/global/plugins/bootstrap/css/bootstrap.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url('theme/admin/assets/global/plugins/uniform/css/uniform.default.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url('theme/admin/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="{{ url('theme/admin/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('theme/admin/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/admin/core/third_party/notific8/jquery.notific8.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/admin/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('theme/admin/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/admin/core/third_party/notific8/jquery.notific8.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS -->
 
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{ url('theme/admin/assets/global/css/components-md.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" id="style_components" type="text/css"/>
-    <link href="{{ url('theme/admin/assets/global/css/plugins-md.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/css/components-md.min.css') }}" rel="stylesheet" id="style_components" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/css/plugins-md.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- END THEME GLOBAL STYLES -->
 
     <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="{{ url('theme/admin/assets/layouts/layout/css/layout.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url('theme/admin/assets/layouts/layout/css/themes/darkblue.min.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css" id="style_color"/>
-    <link href="{{ url('assets/admin/css/style.css', [], env('APP_HTTPS', false)) }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/layouts/layout/css/layout.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/layouts/layout/css/themes/darkblue.min.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
+    <link href="{{ asset('assets/admin/css/style.css') }}" rel="stylesheet" type="text/css"/>
     <!-- END THEME LAYOUT STYLES -->
 
-    <link rel="shortcut icon" href="{{ url('favicon.ico', [], env('APP_HTTPS', false)) }}"/>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
 
     <script type="text/javascript">
-        var baseUrl = '{{ url('', [], env('APP_HTTPS', false)) }}/',
-            assetsUrl  = '{{ url('assets', [], env('APP_HTTPS', false)) }}/',
-            templatesUrl  = '{{ url('templates/admin', [], env('APP_HTTPS', false)) }}/',
-            viewsUrl  = '{{ url('views/admin', [], env('APP_HTTPS', false)) }}/',
-            baseApi = '{{ url('api', [], env('APP_HTTPS', false)) }}/';
+        var baseUrl = '{{ asset('') }}/',
+            assetsUrl  = '{{ asset('assets') }}/',
+            templatesUrl  = '{{ asset('templates/admin') }}/',
+            viewsUrl  = '{{ asset('views/admin') }}/',
+            baseApi = '{{ asset('api') }}/';
     </script>
 </head>
 
@@ -99,24 +99,24 @@
 <!-- END FOOTER -->
 
 <!--[if lt IE 9]>
-<script src="{{ url('theme/admin/assets/global/plugins/respond.min.js', [], env('APP_HTTPS', false)) }}"></script>
-<script src="{{ url('theme/admin/assets/global/plugins/excanvas.min.js', [], env('APP_HTTPS', false)) }}"></script>
+<script src="{{ asset('theme/admin/assets/global/plugins/respond.min.js') }}"></script>
+<script src="{{ asset('theme/admin/assets/global/plugins/excanvas.min.js') }}"></script>
 <![endif]-->
 
 <!-- BEGIN CORE PLUGINS -->
-<script src="{{ url('assets/admin/dist/core.min.js', [], env('APP_HTTPS', false)) }}" type="text/javascript"></script>
-<script src="{{ url('assets/admin/dist/angular-core.min.js', [], env('APP_HTTPS', false)) }}" type="text/javascript"></script>
-<script src="{{ url('assets/admin/core/third_party/ckeditor/ckeditor.js', [], env('APP_HTTPS', false)) }}" type="text/javascript"></script>
-<script src="{{ url('assets/admin/core/third_party/notific8/jquery.notific8.min.js', [], env('APP_HTTPS', false)) }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/dist/core.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/dist/angular-core.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/core/third_party/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/core/third_party/notific8/jquery.notific8.min.js') }}" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
-<script src="{{ url('theme/admin/assets/global/scripts/app.js', [], env('APP_HTTPS', false)) }}" type="text/javascript"></script>
+<script src="{{ asset('theme/admin/assets/global/scripts/app.js') }}" type="text/javascript"></script>
 <!-- END THEME GLOBAL SCRIPTS -->
 
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
-<script src="{{ url('assets/admin/dist/app.min.js', [], env('APP_HTTPS', false)) }}" type="text/javascript"></script>
-<script src="{{ url('assets/admin/dist/angular-app.min.js', [], env('APP_HTTPS', false)) }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/dist/app.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/dist/angular-app.min.js') }}" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
 </body>
 
