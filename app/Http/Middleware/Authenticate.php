@@ -6,6 +6,8 @@ use App\Models;
 
 use Illuminate\Support\Facades\Auth;
 
+use Carbon\Carbon;
+
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -40,21 +42,19 @@ class Authenticate
     {
         if($request->ajax())
         {
-            $authorization = substr($request->header('authorization'), 6);
-            if($authorization)
+            $authorization = $request->header('authorization');
+            if($authorization && $authorization != 'null')
             {
-                $userData = json_decode(base64_decode($authorization));
-
-                if(Auth::attempt(['email' => $userData->email, 'password' => $userData->password]))
+                $user = Models\User::getBy(['login_token' => $authorization]);
+                if($user && Carbon::now() < $user->token_expired_at)
                 {
-                    Auth::logout();
                     return $next($request);
                 }
             }
             return response()->json([
                 'error' => true,
                 'response_code' => 401,
-                'message' => 'You need to login to access this page.'
+                'message' => 'You did not login or your session timeout.'
             ], 401);
         }
 

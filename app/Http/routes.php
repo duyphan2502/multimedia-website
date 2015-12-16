@@ -20,7 +20,7 @@ $router->get('/admin', function () {
 | START Routes for API actions
 |--------------------------------------------------------------------------
 */
-$router->group(['namespace' => 'Api', 'prefix' => 'api', 'middleware' => 'cors'], function($router) {
+$router->group(['namespace' => 'Admin', 'prefix' => 'admin/api', 'middleware' => 'cors'], function($router) {
     /*User*/
     $router->controller('users', 'ApiUserController');
 

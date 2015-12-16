@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
 
 use App\Models;
@@ -11,12 +11,12 @@ use App\Models\Page;
 use App\Models\PageContent;
 use Illuminate\Support\Facades\Auth;
 
-class ApiPageController extends BaseController
+class ApiPageController extends BaseAdminController
 {
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth');
+
         $this->data = [
             'error' => true,
             'response_code' => 500

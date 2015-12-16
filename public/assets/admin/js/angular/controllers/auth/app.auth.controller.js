@@ -28,7 +28,7 @@
         function login() {
             $rootScope.showLoadingState();
             AuthenticationService.login(vm.email, vm.password, function (response){
-                AuthenticationService.setCredentials(vm.email, vm.password);
+                AuthenticationService.setCredentials(vm.email, response.data.access_token);
                 $location.path('/');
             }, function(response){
                 $rootScope.hideLoadingState();

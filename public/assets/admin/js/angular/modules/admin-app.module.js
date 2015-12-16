@@ -10,7 +10,8 @@
             'ngMessages',
             'ui.bootstrap',
             'ngSanitize',
-            'mwl.confirm'
+            'mwl.confirm',
+            'ng'
         ])
         .config(configHttp)
         .config(config)
@@ -18,9 +19,27 @@
 
     configHttp.$inject = ['$httpProvider'];
     function configHttp($httpProvider) {
-        $httpProvider.defaults.headers.common['Authorization'] = 'Basic';
+        $httpProvider.defaults.headers.common['Authorization'] = null;
         /*Always send ajax*/
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+        /*Catch 401 error => return to login page*/
+        $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
+            return {
+                'response': function(response) {
+                    if (response.status === 401) {
+                        //console.log("Response 401");
+                    }
+                    return response || $q.when(response);
+                },
+                'responseError': function(rejection) {
+                    if (rejection.status === 401) {
+                        $location.path('login');
+                    }
+                    return $q.reject(rejection);
+                }
+            };
+        }]);
     }
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -62,7 +81,7 @@
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
         if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authData;
+            $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.token;
             $rootScope.settings.layout.isLogin = false;
         }
 

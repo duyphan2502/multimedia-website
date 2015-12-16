@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
 
 use App\Models;
 
-class ApiFileController extends BaseController
+class ApiFileController extends BaseAdminController
 {
     public function __construct()
     {
