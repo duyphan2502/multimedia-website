@@ -39,10 +39,12 @@
         dr.toggleActive = toggleActive;
         dr.upToParentFolder = upToParentFolder;
         dr.selectMedia = selectMedia;
+        dr.getFileThumbnail = getFileThumbnail;
 
         dr.files = [];
         dr.sub = [];
         dr.selectedItem = '';
+        dr.selectedItemObj = {};
 
         (function initController() {
 
@@ -79,6 +81,7 @@
             var result = '/theme/admin/images/folder.jpg';
             if(!item.is_dir)
             {
+                console.log(item.extension);
                 if(_isImage(item.extension))
                 {
                     var sub = '/';
@@ -138,10 +141,12 @@
                 updatedUrl = '/uploads/' + dr.sub.join('/') + '/' + item.name;
             }
             dr.selectedItem = updatedUrl;
+            dr.selectedItemObj = item;
 
             if($isActivated)
             {
                 dr.selectedItem = '';
+                dr.selectedItemObj = {};
                 return item.active = false;
             }
 
@@ -164,6 +169,15 @@
             $scope.drModel = dr.selectedItem;
             //$scope.$apply();
             $modal.modal('hide');
+        }
+
+        function getFileThumbnail(type)
+        {
+            if(type == 'image')
+            {
+                return $scope.drModel;
+            }
+            return '/theme/admin/images/file.png';
         }
     }
 })();

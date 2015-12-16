@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models;
 
-class ApiUserController extends BaseAdminController
+class AdminUserController extends BaseAdminController
 {
     public function __construct()
     {

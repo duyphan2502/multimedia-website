@@ -35,7 +35,6 @@
         vm.paginationChanged = paginationChanged;
         vm.perPageChanged = perPageChanged;
         //vm.allParams.page = 1;
-        vm.allParams.per_page = 10;
         vm.totalItems = 0;
         vm.maxSize = 3;
         vm.lastPage = 1;
@@ -117,7 +116,6 @@
         }
         function clearSearch() {
             vm.allParams.global_title = undefined;
-            vm.allParams.global_slug = undefined;
             perPageChanged();
         }
 
@@ -157,8 +155,7 @@
             vm.isEditing = true;
             vm.currentSelectedItem = item;
             vm.fastEditData = {
-                global_title: item.global_title,
-                global_slug: item.global_slug
+                global_title: item.global_title
             }
         }
         function cancelUpdate() {

@@ -11,7 +11,7 @@ use App\Models\Page;
 use App\Models\PageContent;
 use Illuminate\Support\Facades\Auth;
 
-class ApiPageController extends BaseAdminController
+class AdminPageController extends BaseAdminController
 {
     public function __construct()
     {
@@ -25,7 +25,14 @@ class ApiPageController extends BaseAdminController
 
     public function getIndex(Request $request)
     {
-        $getByFields = $request->except(['page', 'per_page']);
+        $fields = $request->except(['page', 'per_page']);
+
+        $getByFields = [];
+        if(isset($fields['global_title']))
+        {
+            $getByFields['global_title'] = ['compare' => 'LIKE', 'value' => $fields['global_title']];
+        }
+
         $pages = Page::searchBy($getByFields, ['created_at' => 'desc'], true, $request->get('per_page', 10));
         $this->data = [
             'error' => false,

@@ -25,6 +25,7 @@ var notify  = require('gulp-notify');
 /*Min sass*/
 gulp.task("sassAdmin", function(){
     gulp.src(path.baseAdmin + 'scss/**/*.scss')
+        .pipe(sourcemaps.init())
         .pipe(plumber({
             errorHandler: notify.onError("Error Sass: <%= error.message %>")
         }))
@@ -33,7 +34,6 @@ gulp.task("sassAdmin", function(){
             browsers: ['> 1%', 'last 2 versions']
         }))
         //.pipe(concat('app.min.css'))
-        .pipe(sourcemaps.init())
         .pipe(sourcemaps.write('./map'))
         .pipe(gulp.dest(path.baseAdmin + 'css/'));
 

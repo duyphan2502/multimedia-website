@@ -71,6 +71,12 @@
                 templateUrl: viewsUrl + "pages/page-details.template.html",
                 controller: "PageDetailsController",
                 controllerAs: "vm"
+            })
+            .state('settings', {
+                url: "/settings",
+                templateUrl: viewsUrl + "settings/settings.template.html",
+                controller: "SettingController",
+                controllerAs: "vm"
             });
     }
 

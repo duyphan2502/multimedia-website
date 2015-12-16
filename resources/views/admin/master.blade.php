@@ -42,7 +42,7 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
 
     <script type="text/javascript">
-        var baseUrl = '{{ asset('') }}/',
+        var baseUrl = '{{ asset('') }}',
             assetsUrl  = '{{ asset('assets') }}/',
             templatesUrl  = '{{ asset('templates/admin') }}/',
             viewsUrl  = '{{ asset('views/admin') }}/',
@@ -81,7 +81,7 @@
         <!-- BEGIN CONTENT BODY -->
         <div class="" ng-class="{'page-content': !settings.layout.isLogin}">
             <!-- BEGIN ACTUAL CONTENT -->
-            <!--<h3 class="page-title" ng-if="!settings.layout.isLogin"></h3>-->
+            {{--<h3 class="page-title" ng-if="!settings.layout.isLogin">@{{ pageTitle }}</h3>--}}
             <div ui-view class="fade-in-up"></div>
             <!-- END ACTUAL CONTENT -->
         </div>

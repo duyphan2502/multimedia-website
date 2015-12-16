@@ -22,14 +22,14 @@ $router->get('/admin', function () {
 */
 $router->group(['namespace' => 'Admin', 'prefix' => 'admin/api', 'middleware' => 'cors'], function($router) {
     /*User*/
-    $router->controller('users', 'ApiUserController');
+    $router->controller('users', 'AdminUserController');
 
     /*Page*/
-    $router->controller('pages', 'ApiPageController');
+    $router->controller('pages', 'AdminPageController');
 
     /*Other*/
-    $router->controller('languages', 'ApiLanguageController');
-    $router->controller('files', 'ApiFileController');
+    $router->controller('languages', 'AdminLanguageController');
+    $router->controller('files', 'AdminFileController');
 });
 /*
 |--------------------------------------------------------------------------

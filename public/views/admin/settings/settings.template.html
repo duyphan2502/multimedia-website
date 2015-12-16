@@ -1,0 +1,93 @@
+<form accept-charset="utf-8" novalidate ng-submit="vm.updatePageContent()">
+    <div class="portlet light form-fit bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-pin font-red"></i>
+                <span class="caption-subject font-red sbold uppercase">{{ pageTitle}}</span>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-devided">
+                    <button type="submit" class="btn btn-circle green font-white btn-default btn-sm">
+                        <i class="fa fa-check"></i> Update
+                    </button>
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"
+                       data-original-title="" title=""> </a>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <div class="form-horizontal form-bordered">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Site title</label>
+                        <div class="col-md-7">
+                            <input class="form-control"/>
+                            <span class="help-block">Use for some alt text of image, SEO.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Site logo</label>
+                        <div class="col-md-7">
+                            <media-box dr-title="{{ vm.currentObj.global_title }}"
+                                       class="select-media-box"
+                                       dr-button-title="Update logo"
+                                       dr-type="image"
+                                       ng-model="vm.currentObj.thumbnail">
+                            </media-box>
+                            <span class="help-block">Select logo for this site.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Site keywords</label>
+                        <div class="col-md-7">
+                            <input class="form-control"/>
+                            <span class="help-block">Use for SEO.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Email receives feedback</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="email"/>
+                            <span class="help-block">Email receives feedback from clients</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Default language</label>
+                        <div class="col-md-7">
+                            <language-list dr-class="form-control"
+                                           class="no-label"
+                                           dr-name="language_id"
+                                           id="language_id"
+                                           dr-label="Language"
+                                           dr-change="vm.changeLanguage()"
+                                           ng-model="vm.langId">
+                            </language-list>
+                            <span class="help-block">CMS default language.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Construction mode</label>
+                        <div class="col-md-7">
+                            <div class="md-checkbox has-error">
+                                <input type="checkbox"
+                                       id="construction_mode"
+                                       name="status"
+                                       ng-model="vm.currentObj.status"
+                                       ng-value="1"
+                                       class="md-radiobtn">
+                                <label for="construction_mode" style="margin-bottom: 0;">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> In construction mode
+                                </label>
+                            </div>
+                            <span class="help-block">Make the site is on construction mode.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END FORM-->
+        </div>
+    </div>
+</form>

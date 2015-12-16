@@ -204,7 +204,7 @@ abstract class AbstractModel extends Model
 
     /**
      * Search items. Accept params.
-     * @param $fields: ['field_1' => 'value_1', 'field_2' => 'value_2'].
+     * @param $fields: ['field_1' => ['compare' => '=', 'value' => 'value'], 'field_2' => ['compare' => 'LIKE', 'value' => 'value']].
      * @param $order: [*order_by* => *order_type*].
      * @param $multiple: get many items or just the first one.
      * @param $perPage: how many items per page. If < 1, will return all items.
@@ -218,8 +218,15 @@ abstract class AbstractModel extends Model
             foreach($fields as $key => $row)
             {
                 $obj = $obj->where(function($q) use ($key, $row){
-                    $q->where($key, '=', $row);
-                    $q->orWhere($key, 'LIKE', '%'.$row.'%');
+
+                    if($row['compare'] == 'LIKE')
+                    {
+                        $q->where($key, $row['compare'], $row['value']);
+                    }
+                    else
+                    {
+                        $q->where($key, $row['compare'], '%'.$row['value'].'%');
+                    }
                 });
             }
         }

@@ -23,13 +23,11 @@ class Page extends AbstractModel
 
     protected $rules = [
         'global_title' => 'required|max:255',
-        'global_slug' => 'required|max:255|unique:pages',
         'status' => 'integer|required'
     ];
 
     private $acceptableEdit = [
         'global_title',
-        'global_slug',
         'status'
     ];
 
@@ -50,7 +48,7 @@ class Page extends AbstractModel
             ->join('languages', 'languages.id', '=', 'page_contents.language_id')
             ->where('pages.id', '=', $id)
             ->where('page_contents.language_id', '=', $languageId)
-            ->select('pages.global_title', 'pages.global_slug', 'page_contents.*')
+            ->select('pages.global_title', 'page_contents.*')
             ->first();
     }
 
@@ -83,11 +81,6 @@ class Page extends AbstractModel
             if(in_array($key, $this->acceptableEdit))
             {
                 $page->$key = $row;
-
-                if($key == 'global_slug')
-                {
-                    $page->$key = str_slug($row);
-                }
             }
         }
 
