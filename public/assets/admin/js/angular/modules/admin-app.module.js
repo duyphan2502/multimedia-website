@@ -24,15 +24,22 @@
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         /*Catch 401 error => return to login page*/
-        $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
+        $httpProvider.interceptors.push(['$q', '$location', '$rootScope', function ($q, $location, $rootScope) {
             return {
+                'request': function(config) {
+                    $rootScope.showLoadingState();
+                    return config || $q.when(config);
+                },
                 'response': function(response) {
-                    if (response.status === 401) {
-                        //console.log("Response 401");
-                    }
+                    $rootScope.hideLoadingState();
                     return response || $q.when(response);
                 },
+                'requestError': function(rejection) {
+                    $rootScope.hideLoadingState();
+                    return $q.reject(rejection);
+                },
                 'responseError': function(rejection) {
+                    $rootScope.hideLoadingState();
                     if (rejection.status === 401) {
                         $location.path('login');
                     }
@@ -118,5 +125,12 @@
         {
             $rootScope.settings.layout.loading = false;
         };
+
+        /*$rootScope.$on('httpCallStarted', function(e) {
+            $rootScope.showLoadingState();
+        });
+        $rootScope.$on('httpCallStopped', function(e) {
+            $rootScope.hideLoadingState();
+        });*/
     }
 })();

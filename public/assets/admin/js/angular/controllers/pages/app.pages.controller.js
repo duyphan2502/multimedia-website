@@ -169,7 +169,6 @@
 
         /*Update page*/
         function updatePage($id, $data) {
-            $rootScope.showLoadingState();
             PageService.updateGlobal($id, $data, function (response) {
                 getAllPages(vm.allParams);
                 vm.isEditing = false;
@@ -177,7 +176,6 @@
                 vm.fastEditData = {};
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
-                $rootScope.hideLoadingState();
                 MyHelpers.showNotification8(response.data.message, 'error');
             });
         }
@@ -187,24 +185,20 @@
             var $data = {
                 status: $status
             };
-            $rootScope.showLoadingState();
             PageService.updateGlobal($id, $data, function (response) {
                 getAllPages(vm.allParams);
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
-                $rootScope.hideLoadingState();
                 MyHelpers.showNotification8(response.data.message, 'error');
             });
         }
 
         /*Delete page*/
         function deletePage($id) {
-            $rootScope.showLoadingState();
             PageService.deletePage($id, function (response) {
                 getAllPages(vm.allParams);
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
-                $rootScope.hideLoadingState();
                 MyHelpers.showNotification8(response.data.message, 'error');
             });
         }
@@ -223,7 +217,6 @@
         }
         /*Handle group actions*/
         function handleGroupActions() {
-            $rootScope.showLoadingState();
             PageService.updateGlobal(null, {
                 is_group_action: true,
                 _group_action: vm.drCurrentGroupAction,
@@ -233,7 +226,6 @@
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
                 MyHelpers.showNotification8(response.data.message, 'error');
-                $rootScope.hideLoadingState();
             });
         }
     }

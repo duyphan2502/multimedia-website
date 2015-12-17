@@ -1,4 +1,4 @@
-<form accept-charset="utf-8" novalidate ng-submit="vm.updatePageContent()">
+<form accept-charset="utf-8" novalidate ng-submit="vm.updateSettings()">
     <div class="portlet light form-fit bordered">
         <div class="portlet-title">
             <div class="caption">
@@ -22,8 +22,8 @@
                     <div class="form-group">
                         <label class="control-label col-md-3">Site title</label>
                         <div class="col-md-7">
-                            <input class="form-control"/>
-                            <span class="help-block">Use for some alt text of image, SEO.</span>
+                            <input class="form-control" ng-model="vm.settings.site_title"/>
+                            <span class="help-block">Title of website.</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -33,7 +33,7 @@
                                        class="select-media-box"
                                        dr-button-title="Update logo"
                                        dr-type="image"
-                                       ng-model="vm.currentObj.thumbnail">
+                                       ng-model="vm.settings.site_logo">
                             </media-box>
                             <span class="help-block">Select logo for this site.</span>
                         </div>
@@ -41,14 +41,14 @@
                     <div class="form-group">
                         <label class="control-label col-md-3">Site keywords</label>
                         <div class="col-md-7">
-                            <input class="form-control"/>
+                            <input class="form-control" ng-model="vm.settings.site_keywords"/>
                             <span class="help-block">Use for SEO.</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3">Email receives feedback</label>
                         <div class="col-md-7">
-                            <input class="form-control" type="email"/>
+                            <input class="form-control" type="email" ng-model="vm.settings.email_receives_feedback"/>
                             <span class="help-block">Email receives feedback from clients</span>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                                            id="language_id"
                                            dr-label="Language"
                                            dr-change="vm.changeLanguage()"
-                                           ng-model="vm.langId">
+                                           ng-model="vm.settings.default_language">
                             </language-list>
                             <span class="help-block">CMS default language.</span>
                         </div>
@@ -73,8 +73,9 @@
                                 <input type="checkbox"
                                        id="construction_mode"
                                        name="status"
-                                       ng-model="vm.currentObj.status"
-                                       ng-value="1"
+                                       ng-model="vm.settings.construction_mode"
+                                       ng-true-value="'1'"
+                                       ng-false-value="'0'"
                                        class="md-radiobtn">
                                 <label for="construction_mode" style="margin-bottom: 0;">
                                     <span></span>
@@ -88,6 +89,16 @@
                 </div>
             </div>
             <!-- END FORM-->
+        </div>
+        <div class="portlet-title portlet-footer">
+            <div class="actions">
+                <div class="btn-group btn-group-devided">
+                    <button type="submit" class="btn btn-circle green font-white btn-default btn-sm">
+                        <i class="fa fa-check"></i> Update
+                    </button>
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
         </div>
     </div>
 </form>

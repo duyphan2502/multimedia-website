@@ -28,12 +28,7 @@
         {
             $rootScope.bodyClass = 'page page-page-edit';
             $rootScope.pageTitle = 'Edit page';
-            $rootScope.showLoadingState();
-            getPage(function(){
-                $rootScope.hideLoadingState();
-            }, function(){
-                $rootScope.hideLoadingState();
-            });
+            getPage();
         }
 
         function getPage(callback, callbackError)
@@ -49,16 +44,10 @@
 
         function updatePageContent()
         {
-            $rootScope.showLoadingState();
             PageService.update(vm.pageId, vm.langId, vm.currentObj, function(response){
-                getPage(function(){
-                    $rootScope.hideLoadingState();
-                }, function(){
-                    $rootScope.hideLoadingState();
-                });
+                getPage();
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function(response){
-                $rootScope.hideLoadingState();
                 MyHelpers.showNotification8(response.data.message, 'error');
             });
         }

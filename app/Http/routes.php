@@ -27,6 +27,9 @@ $router->group(['namespace' => 'Admin', 'prefix' => 'admin/api', 'middleware' =>
     /*Page*/
     $router->controller('pages', 'AdminPageController');
 
+    /*Settings*/
+    $router->controller('settings', 'AdminSettingController');
+
     /*Other*/
     $router->controller('languages', 'AdminLanguageController');
     $router->controller('files', 'AdminFileController');

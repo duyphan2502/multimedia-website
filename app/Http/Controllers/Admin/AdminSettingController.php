@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models;
 
-class AdminLanguageController extends BaseAdminController
+class AdminSettingController extends BaseAdminController
 {
     public function __construct()
     {
@@ -20,12 +20,18 @@ class AdminLanguageController extends BaseAdminController
 
     public function getIndex(Request $request)
     {
-        $language = Models\Language::getAllLanguage();
+        $settings = Models\Setting::getAllSettings();
         $this->data = [
             'error' => false,
             'response_code' => 200,
-            'data' => $language->toArray()
+            'data' => $settings
         ];
         return response()->json($this->data, $this->data['response_code']);
+    }
+
+    public function putUpdateAll(Request $request)
+    {
+        $result = Models\Setting::updateSettings($request->all());
+        return response()->json($result, $result['response_code']);
     }
 }

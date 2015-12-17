@@ -81,7 +81,6 @@
             var result = '/theme/admin/images/folder.jpg';
             if(!item.is_dir)
             {
-                console.log(item.extension);
                 if(_isImage(item.extension))
                 {
                     var sub = '/';
