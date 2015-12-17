@@ -221,11 +221,11 @@ abstract class AbstractModel extends Model
 
                     if($row['compare'] == 'LIKE')
                     {
-                        $q->where($key, $row['compare'], $row['value']);
+                        $q->where($key, $row['compare'], '%'.$row['value'].'%');
                     }
                     else
                     {
-                        $q->where($key, $row['compare'], '%'.$row['value'].'%');
+                        $q->where($key, $row['compare'], $row['value']);
                     }
                 });
             }
