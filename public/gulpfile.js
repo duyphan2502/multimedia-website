@@ -75,7 +75,6 @@ gulp.task('appMinJsAdmin', function() {
 gulp.task('angularCoreMinJsAdmin', function() {
     gulp.src([
             path.bower + 'angular/angular.js',
-            path.bower + 'angular-mocks/angular-mocks.js',
             path.bower + 'angular-ui-router/release/angular-ui-router.min.js',
             path.bower + 'angular-resource/angular-resource.js',
             path.bower + 'angular-animate/angular-animate.js',

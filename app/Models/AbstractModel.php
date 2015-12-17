@@ -129,7 +129,7 @@ abstract class AbstractModel extends Model
         if($error == null) $error = $this->getErrorsWithKey();
         foreach ($data as $key => $row)
         {
-            if($object->{$key} == $data[$key] && array_key_exists($key, $error))
+            if($data[$key] && $object->{$key} == $data[$key] && array_key_exists($key, $error))
             {
                 return true;
             }

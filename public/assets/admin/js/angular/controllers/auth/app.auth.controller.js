@@ -5,8 +5,8 @@
         .module('app')
         .controller('AuthController', AuthController);
 
-    AuthController.$inject = ['$scope', '$rootScope', '$location', 'AuthenticationService'];
-    function AuthController($scope, $rootScope, $location, AuthenticationService) {
+    AuthController.$inject = ['$scope', '$rootScope', '$location', 'AuthenticationService', 'SettingService'];
+    function AuthController($scope, $rootScope, $location, AuthenticationService, SettingService) {
         var vm = this;
 
         vm.login = login;
@@ -28,6 +28,9 @@
         function login() {
             AuthenticationService.login(vm.email, vm.password, function (response){
                 AuthenticationService.setCredentials(vm.email, response.data.access_token);
+                SettingService.getAll(function(response){
+                    $rootScope.cmsSettings = response.data.data;
+                });
                 $location.path('/');
             }, function(response){
                 vm.error = response.error;

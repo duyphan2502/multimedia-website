@@ -26,6 +26,9 @@
 
                 /*Convert type of some settings*/
                 vm.settings.default_language = parseInt(vm.settings.default_language);
+
+                /*Pass settings to $rootScope, so you can access it from other controller*/
+                $rootScope.cmsSettings = vm.settings;
             });
         }
 

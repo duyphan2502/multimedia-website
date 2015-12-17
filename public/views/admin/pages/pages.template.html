@@ -7,9 +7,10 @@
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
-                <button type="submit" class="btn btn-circle green font-white btn-default btn-sm">
+                <a ui-sref="pageDetails({id: 0, lang: cmsSettings.default_language})"
+                   class="btn btn-circle green font-white btn-default btn-sm">
                     <i class="fa fa-check"></i> Create
-                </button>
+                </a>
                 <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
             </div>
         </div>
@@ -83,7 +84,7 @@
                             </label>
                         </td>
                         <td>
-                            <a ui-sref="pageDetails({id: item.id, lang: 59})"
+                            <a ui-sref="pageDetails({id: item.id, lang: cmsSettings.default_language})"
                                ng-bind="item.global_title"
                                ng-if="vm.isEditing != true || vm.currentSelectedItem.id != item.id"
                                title="Edit"></a>

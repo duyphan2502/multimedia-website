@@ -48,19 +48,33 @@ class AdminPageController extends BaseAdminController
             'error' => false,
             'response_code' => 200
         ];
-        $page = Page::getPageById($id, $language);
-
-        /*Create new if not exists*/
-        if(!$page)
+        if(!$id == 0)
         {
-            $page = new PageContent();
-            $page->language_id = $language;
-            $page->page_id = $id;
-            $page->save();
+            $page = Page::find($id);
+            if(!$page)
+            {
+                $this->data = [
+                    'error' => true,
+                    'response_code' => 404,
+                    'message' => 'The page you have tried to edit not found.'
+                ];
+                return response()->json($this->data, $this->data['response_code']);
+            }
             $page = Page::getPageById($id, $language);
-        }
 
-        $this->data['data'] = $page->toArray();
+            /*Create new if not exists*/
+            if(!$page)
+            {
+                $page = new PageContent();
+                $page->language_id = $language;
+                $page->page_id = $id;
+                $page->save();
+                $page = Page::getPageById($id, $language);
+            }
+            $this->data['data'] = $page->toArray();
+        }
+        /*If id == 0 ==> create page.*/
+
         return response()->json($this->data, $this->data['response_code']);
     }
 
@@ -79,7 +93,14 @@ class AdminPageController extends BaseAdminController
     public function postEdit(Request $request, Page $page, $id, $language)
     {
         $data = $request->all();
-        $result = $page->updatePageContent($id, $language, $data);
+        if($id == 0)
+        {
+            $result = $page->createPage($id, $language, $data);
+        }
+        else
+        {
+            $result = $page->updatePageContent($id, $language, $data);
+        }
         return response()->json($result, $result['response_code']);
     }
 

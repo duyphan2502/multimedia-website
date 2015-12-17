@@ -29,8 +29,8 @@
     <!-- END PAGE LEVEL PLUGINS -->
 
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{ asset('theme/admin/assets/global/css/components-md.min.css') }}" rel="stylesheet" id="style_components" type="text/css"/>
-    <link href="{{ asset('theme/admin/assets/global/css/plugins-md.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css"/>
+    <link href="{{ asset('theme/admin/assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- END THEME GLOBAL STYLES -->
 
     <!-- BEGIN THEME LAYOUT STYLES -->
@@ -50,7 +50,7 @@
     </script>
 </head>
 
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-md @{{ bodyClass }}"
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white @{{ bodyClass }}"
       ng-class="{'on-loading': settings.layout.loading}">
 
 <!-- Loading state -->

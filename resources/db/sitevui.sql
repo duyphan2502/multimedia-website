@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-12-17 09:01:28
+Date: 2015-12-17 12:42:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4769,7 +4769,7 @@ CREATE TABLE `page_contents` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of page_contents
@@ -4779,6 +4779,7 @@ INSERT INTO `page_contents` VALUES ('10', '1', '1', 'English title', 'english-al
 INSERT INTO `page_contents` VALUES ('11', '2', '59', null, '', null, null, '1', '/uploads/10.jpg', null, '2015-12-12 18:43:26', '2015-12-12 18:43:41');
 INSERT INTO `page_contents` VALUES ('12', '2', '1', null, '', null, null, '1', '/uploads/10.jpg', null, '2015-12-12 18:43:44', '2015-12-12 18:43:51');
 INSERT INTO `page_contents` VALUES ('13', '6', '59', null, 'q-and-a', null, '', '1', '/uploads/10.jpg', null, '2015-12-16 07:35:27', '2015-12-16 08:34:59');
+INSERT INTO `page_contents` VALUES ('14', '0', '59', null, null, null, null, '1', null, null, '2015-12-17 04:53:24', '2015-12-17 04:53:24');
 
 -- ----------------------------
 -- Table structure for `settings`
@@ -4800,7 +4801,7 @@ INSERT INTO `settings` VALUES ('24', 'email_receives_feedback', 'duyphan.develop
 INSERT INTO `settings` VALUES ('36', 'site_title', 'Site Vui - Angularjs', '2015-12-17 07:51:37', '2015-12-17 01:49:39');
 INSERT INTO `settings` VALUES ('37', 'site_logo', '/uploads/10.jpg', '2015-12-17 07:51:52', '2015-12-17 01:49:39');
 INSERT INTO `settings` VALUES ('38', 'site_keywords', 'Site vui, vui, haivl', '2015-12-17 07:52:21', '2015-12-17 01:49:39');
-INSERT INTO `settings` VALUES ('39', 'default_language', '59', '2015-12-17 07:53:12', '2015-12-17 07:53:15');
+INSERT INTO `settings` VALUES ('39', 'default_language', '59', '2015-12-17 07:53:12', '2015-12-17 04:52:00');
 INSERT INTO `settings` VALUES ('34', 'google_analytics', '<script></script>', '2015-11-24 16:35:03', '2015-11-25 00:07:38');
 INSERT INTO `settings` VALUES ('35', 'construction_mode', '0', '2015-11-24 16:36:20', '2015-12-17 01:49:39');
 
@@ -4836,5 +4837,5 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '1', 'duy.phan2509@outlook.com', '$2y$10$OhUkdcdm5JlAnwr1s2VO/eAxpKiU66wLMVqsiQW9yesyheGs7/Fj6', 'Webmaster', '', '', 'PHP developer, Frontend developer', '2015-03-04 22:27:35', null, '/uploads/minh-duc.png', '0984848519', '0915428202', '01993032562', 'activated', null, 'aUz7m68uo4AqmDEjBQDF47pfshxSKvULJs4WqBCnPp5ezEbNPdTRpS8v862c', '749f258446f1d3bc08c9b669b3bb1a0f', '2015-12-18 01:59:28', '2014-10-14 00:10:13', '2015-12-17 01:59:28');
+INSERT INTO `users` VALUES ('1', '1', 'duy.phan2509@outlook.com', '$2y$10$OhUkdcdm5JlAnwr1s2VO/eAxpKiU66wLMVqsiQW9yesyheGs7/Fj6', 'Webmaster', '', '', 'PHP developer, Frontend developer', '2015-03-04 22:27:35', null, '/uploads/minh-duc.png', '0984848519', '0915428202', '01993032562', 'activated', null, 'aUz7m68uo4AqmDEjBQDF47pfshxSKvULJs4WqBCnPp5ezEbNPdTRpS8v862c', '749f258446f1d3bc08c9b669b3bb1a0f', '2015-12-18 04:49:21', '2014-10-14 00:10:13', '2015-12-17 04:49:21');
 INSERT INTO `users` VALUES ('15', '3', 'admin@vto.com', '$2y$10$qZOddgitcKNDydQ2C/VDd.ki9ip/tzizJApG.4JVHhD5hyaUt3Bke', 'Administrator', '', '', '', '0000-00-00 00:00:00', null, '', '', '', '', 'activated', null, '', '', '0000-00-00 00:00:00', '2015-05-27 20:58:15', '2015-09-19 06:37:17');

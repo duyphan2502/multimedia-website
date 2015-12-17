@@ -31,6 +31,17 @@ class Page extends AbstractModel
         'status'
     ];
 
+    protected $rulesEditContent = [
+        'title' => 'required|max:255',
+        'slug' => 'required|max:255|unique:page_contents',
+        'language_id' => 'min:1|integer|required',
+        'description' => 'max:1000',
+        'content' => 'max:5000|string',
+        'status' => 'integer|required',
+        'thumbnail' => 'string|max:255',
+        'tags' => 'string|max:255',
+    ];
+
     private $acceptableEditContent = [
         'title',
         'slug',
@@ -67,8 +78,15 @@ class Page extends AbstractModel
             'response_code' => 500,
             'message' => 'Some error occurred!'
         ];
-        $page = static::find($id);
-        if(!$page) return $result;
+        if($id == 0)
+        {
+            $page = new static;
+        }
+        else
+        {
+            $page = static::find($id);
+            if(!$page) return $result;
+        }
 
         $validate = $this->validateData($data, null, null, $justUpdateSomeFields);
         if(!$validate && !$this->checkValueNotChange($page, $data))
@@ -86,6 +104,7 @@ class Page extends AbstractModel
 
         if($page->save())
         {
+            if($id == 0) $result['page_id'] = $page->id;
             $result['error'] = false;
             $result['response_code'] = 200;
             $result['message'] = 'Update page completed!';
@@ -135,11 +154,28 @@ class Page extends AbstractModel
             'message' => 'Some error occurred!'
         ];
 
+        $page = static::find($id);
+        if(!$page)
+        {
+            $result['message'] = 'The page you have tried to edit not found.';
+            $result['response_code'] = 404;
+            return $result;
+        }
+
         /*Update page content*/
         $pageContent = static::getPageContentByPageId($id, $languageId);
-        if(!$pageContent) return $result;
+        if(!$pageContent)
+        {
+            $pageContent = new PageContent();
+            $pageContent->language_id = $languageId;
+            $pageContent->page_id = $id;
+            $pageContent->save();
 
-        $validate = $this->validateData($data, $this->rulesEditContent, null, true);
+            $pageContent = static::getPageContentByPageId($id, $languageId);
+        }
+
+        $validate = $this->validateData($data, $this->rulesEditContent);
+
         if(!$validate && !$this->checkValueNotChange($pageContent, $data))
         {
             return $this->getErrorsWithResponse();
@@ -214,5 +250,25 @@ class Page extends AbstractModel
         }
 
         return $result;
+    }
+
+    public function createPage($id, $language, $data)
+    {
+        $dataPage = ['status' => 1];
+        if(isset($data['title'])) $dataPage['global_title'] = $data['title'];
+        if(!isset($data['status'])) $data['status'] = 1;
+        if(!isset($data['language_id'])) $data['language_id'] = $language;
+
+        $resultCreatePage = $this->updatePage($id, $dataPage);
+
+        /*No error*/
+        if(!$resultCreatePage['error'])
+        {
+            $page_id = $resultCreatePage['page_id'];
+            $resultUpdatePageContent = $this->updatePageContent($page_id, $language, $data);
+            $resultUpdatePageContent['page_id'] = $page_id;
+            return $resultUpdatePageContent;
+        }
+        return $resultCreatePage;
     }
 }

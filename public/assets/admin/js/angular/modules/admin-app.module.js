@@ -87,15 +87,20 @@
             });
     }
 
-    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http', 'SettingsFactory'];
-    function run($rootScope, $location, $cookieStore, $http, SettingsFactory) {
+    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http', 'SettingsFactory', 'SettingService'];
+    function run($rootScope, $location, $cookieStore, $http, SettingsFactory, SettingService) {
         SettingsFactory.defineSettings();
 
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
-        if ($rootScope.globals.currentUser) {
+        if ($rootScope.globals.currentUser)
+        {
             $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.token;
             $rootScope.settings.layout.isLogin = false;
+
+            SettingService.getAll(function(response){
+                $rootScope.cmsSettings = response.data.data;
+            });
         }
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
