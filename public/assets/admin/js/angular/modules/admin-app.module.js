@@ -79,6 +79,18 @@
                 controller: "PageDetailsController",
                 controllerAs: "vm"
             })
+            .state('categories', {
+                url: "/categories",
+                templateUrl: viewsUrl + "categories/categories.template.html",
+                controller: "CategoriesController",
+                controllerAs: "vm"
+            })
+            .state('categoryDetails', {
+                url: "/categories/{id:[0-9]*}/{lang:[0-9]*}",
+                templateUrl: viewsUrl + "categories/category-details.template.html",
+                controller: "PageDetailsController",
+                controllerAs: "vm"
+            })
             .state('settings', {
                 url: "/settings",
                 templateUrl: viewsUrl + "settings/settings.template.html",
@@ -114,7 +126,7 @@
 
         $rootScope.$on('$stateChangeSuccess', function(){
             $rootScope.settings.layout.loading = false;
-            Layout.setSidebarMenuActiveLink('match'); // init sidebar active links
+            Layout.setSidebarMenuActiveLink('match');
         });
 
         /*Show - Hide loading state*/
@@ -130,12 +142,5 @@
         {
             $rootScope.settings.layout.loading = false;
         };
-
-        /*$rootScope.$on('httpCallStarted', function(e) {
-            $rootScope.showLoadingState();
-        });
-        $rootScope.$on('httpCallStopped', function(e) {
-            $rootScope.hideLoadingState();
-        });*/
     }
 })();
