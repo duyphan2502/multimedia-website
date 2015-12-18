@@ -120,7 +120,7 @@ class AdminPageController extends BaseAdminController
         if(!$ids) return response()->json($this->data, $this->data['response_code']);
 
         $data = [];
-        switch($request->get('_group_action'))
+        switch($request->get('group_action'))
         {
             case 'disable':
             {

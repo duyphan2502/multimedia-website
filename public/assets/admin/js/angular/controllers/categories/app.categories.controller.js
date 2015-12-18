@@ -219,7 +219,7 @@
         function handleGroupActions() {
             CategoryService.updateGlobal(null, {
                 is_group_action: true,
-                _group_action: vm.drCurrentGroupAction,
+                group_action: vm.drCurrentGroupAction,
                 ids: MyHelpers.getGroupActionsSelectedIds(vm.selectedItems)
             }, function (response) {
                 getAllCategories(vm.allParams);
