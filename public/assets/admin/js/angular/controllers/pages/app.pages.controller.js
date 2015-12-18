@@ -134,17 +134,17 @@
             switch (status) {
                 case 0:
                 {
-                    return '<span class="label label-default">disabled</span>';
+                    return '<span class="label label-default label-sm">disabled</span>';
                 }
                     break;
                 case 1:
                 {
-                    return '<span class="label label-success">activated</span>';
+                    return '<span class="label label-success label-sm">activated</span>';
                 }
                     break;
                 default:
                 {
-                    return '<span class="label label-default">disabled</span>';
+                    return '<span class="label label-default label-sm">disabled</span>';
                 }
                     break;
             }

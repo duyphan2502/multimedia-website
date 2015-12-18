@@ -17,15 +17,18 @@ $router->get('/admin', function () {
 
 /*
 |--------------------------------------------------------------------------
-| START Routes for API actions
+| START Routes for Admin actions
 |--------------------------------------------------------------------------
 */
-$router->group(['namespace' => 'Admin', 'prefix' => 'admin/api', 'middleware' => 'cors'], function($router) {
-    /*User*/
+$router->group(['namespace' => 'Admin', 'prefix' => 'admin/api'], function($router) {
+    /*Users*/
     $router->controller('users', 'AdminUserController');
 
-    /*Page*/
+    /*Pages*/
     $router->controller('pages', 'AdminPageController');
+
+    /*Categories*/
+    $router->controller('categories', 'AdminCategoryController');
 
     /*Settings*/
     $router->controller('settings', 'AdminSettingController');
@@ -36,6 +39,6 @@ $router->group(['namespace' => 'Admin', 'prefix' => 'admin/api', 'middleware' =>
 });
 /*
 |--------------------------------------------------------------------------
-| END Routes for API actions
+| END Routes for Admin actions
 |--------------------------------------------------------------------------
 */

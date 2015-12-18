@@ -6,7 +6,7 @@ use App\Models;
 use App\Models\AbstractModel;
 use Illuminate\Support\Facades\Validator;
 
-class Page extends AbstractModel
+class Category extends AbstractModel
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class Page extends AbstractModel
      *
      * @var string
      */
-    protected $table = 'pages';
+    protected $table = 'categories';
 
     protected $primaryKey = 'id';
 
@@ -28,7 +28,8 @@ class Page extends AbstractModel
 
     private $acceptableEdit = [
         'global_title',
-        'status'
+        'status',
+        'parent_id'
     ];
 
     protected $rulesEditContent = [
@@ -53,25 +54,25 @@ class Page extends AbstractModel
         'tags'
     ];
 
-    public static function getPageById($id, $languageId = 0)
+    public static function getCategoryById($id, $languageId = 0)
     {
-        return static::join('page_contents', 'pages.id', '=', 'page_contents.page_id')
-            ->join('languages', 'languages.id', '=', 'page_contents.language_id')
-            ->where('pages.id', '=', $id)
-            ->where('page_contents.language_id', '=', $languageId)
-            ->select('pages.global_title', 'page_contents.*')
+        return static::join('category_contents', 'categories.id', '=', 'category_contents.category_id')
+            ->join('languages', 'languages.id', '=', 'category_contents.language_id')
+            ->where('categories.id', '=', $id)
+            ->where('category_contents.language_id', '=', $languageId)
+            ->select('categories.global_title', 'category_contents.*')
             ->first();
     }
 
-    public static function getPageContentByPageId($id, $languageId = 0)
+    public static function getCategoryContentByCategoryId($id, $languageId = 0)
     {
-        return Models\PageContent::getBy([
-            'page_id' => $id,
+        return Models\CategoryContent::getBy([
+            'category_id' => $id,
             'language_id' => $languageId
         ]);
     }
 
-    public function updatePage($id, $data, $justUpdateSomeFields = false)
+    public function updateCategory($id, $data, $justUpdateSomeFields = false)
     {
         $result = [
             'error' => true,
@@ -80,16 +81,16 @@ class Page extends AbstractModel
         ];
         if($id == 0)
         {
-            $page = new static;
+            $category = new static;
         }
         else
         {
-            $page = static::find($id);
-            if(!$page) return $result;
+            $category = static::find($id);
+            if(!$category) return $result;
         }
 
         $validate = $this->validateData($data, null, null, $justUpdateSomeFields);
-        if(!$validate && !$this->checkValueNotChange($page, $data))
+        if(!$validate && !$this->checkValueNotChange($category, $data))
         {
             return $this->getErrorsWithResponse();
         }
@@ -98,21 +99,21 @@ class Page extends AbstractModel
         {
             if(in_array($key, $this->acceptableEdit))
             {
-                $page->$key = $row;
+                $category->$key = $row;
             }
         }
 
-        if($page->save())
+        if($category->save())
         {
-            if($id == 0) $result['page_id'] = $page->id;
+            if($id == 0) $result['category_id'] = $category->id;
             $result['error'] = false;
             $result['response_code'] = 200;
-            $result['message'] = 'Update page completed!';
+            $result['message'] = 'Update category completed!';
         }
         return $result;
     }
 
-    public function updatePages($ids, $data, $justUpdateSomeFields = false)
+    public function updateCategories($ids, $data, $justUpdateSomeFields = false)
     {
         $validate = $this->validateData($data, null, null, $justUpdateSomeFields);
         if(!$validate)
@@ -133,20 +134,20 @@ class Page extends AbstractModel
             }
         }
 
-        $pages = static::whereIn('id', $ids);
-        if($pages->update($data))
+        $categories = static::whereIn('id', $ids);
+        if($categories->update($data))
         {
             $result['error'] = false;
             $result['response_code'] = 200;
             $result['message'] = [
-                'Update pages completed!'
+                'Update categories completed!'
             ];
         }
 
         return $result;
     }
 
-    public function updatePageContent($id, $languageId, $data)
+    public function updateCategoryContent($id, $languageId, $data)
     {
         $result = [
             'error' => true,
@@ -154,29 +155,29 @@ class Page extends AbstractModel
             'message' => 'Some error occurred!'
         ];
 
-        $page = static::find($id);
-        if(!$page)
+        $category = static::find($id);
+        if(!$category)
         {
-            $result['message'] = 'The page you have tried to edit not found.';
+            $result['message'] = 'The category you have tried to edit not found.';
             $result['response_code'] = 404;
             return $result;
         }
 
         /*Update page content*/
-        $pageContent = static::getPageContentByPageId($id, $languageId);
-        if(!$pageContent)
+        $categoryContent = static::getCategoryContentByCategoryId($id, $languageId);
+        if(!$categoryContent)
         {
-            $pageContent = new PageContent();
-            $pageContent->language_id = $languageId;
-            $pageContent->page_id = $id;
-            $pageContent->save();
+            $categoryContent = new CategoryContent();
+            $categoryContent->language_id = $languageId;
+            $categoryContent->page_id = $id;
+            $categoryContent->save();
 
-            //$pageContent = static::getPageContentByPageId($id, $languageId);
+            //$categoryContent = static::getCategoryContentByCategoryId($id, $languageId);
         }
 
         $validate = $this->validateData($data, $this->rulesEditContent);
 
-        if(!$validate && !$this->checkValueNotChange($pageContent, $data))
+        if(!$validate && !$this->checkValueNotChange($categoryContent, $data))
         {
             return $this->getErrorsWithResponse();
         }
@@ -185,39 +186,39 @@ class Page extends AbstractModel
         {
             if(in_array($keyContent, $this->acceptableEditContent))
             {
-                $pageContent->$keyContent = $rowContent;
+                $categoryContent->$keyContent = $rowContent;
 
                 if($keyContent == 'slug')
                 {
-                    $pageContent->$keyContent = str_slug($rowContent);
+                    $categoryContent->$keyContent = str_slug($rowContent);
                 }
             }
         }
-        if($pageContent->save())
+        if($categoryContent->save())
         {
             $result['error'] = false;
             $result['response_code'] = 200;
-            $result['message'] = 'Update page completed!';
+            $result['message'] = 'Update category completed!';
         }
         return $result;
     }
 
-    public static function deletePage($id)
+    public static function deleteCategory($id)
     {
         $result = [
             'error' => true,
             'response_code' => 500,
             'message' => 'Some error occurred!'
         ];
-        $page = static::find($id);
+        $category = static::find($id);
 
-        if(!$page)
+        if(!$category)
         {
-            $result['message'] = 'The page you have tried to edit not found';
+            $result['message'] = 'The category you have tried to edit not found';
             return $result;
         }
 
-        $temp = PageContent::where('page_id', '=', $id);
+        $temp = CategoryContent::where('category_id', '=', $id);
         $related = $temp->get();
         if(!count($related))
         {
@@ -231,44 +232,45 @@ class Page extends AbstractModel
             {
                 $result['error'] = false;
                 $result['response_code'] = 200;
-                $result['message'] = ['Delete related content completed!'];
+                $result['messages'][] = 'Delete related content completed!';
             }
-            if($page->delete())
+            if($category->delete())
             {
                 $result['error'] = false;
                 $result['response_code'] = 200;
-                $result['message'] = ['Delete page completed!'];
+                $result['messages'][] = 'Delete page completed!';
             }
         }
         else
         {
-            if($page->delete())
+            if($category->delete())
             {
                 $result['error'] = false;
                 $result['response_code'] = 200;
+                $result['messages'][] = 'Delete category completed!';
             }
         }
 
         return $result;
     }
 
-    public function createPage($id, $language, $data)
+    public function createCategory($id, $language, $data)
     {
-        $dataPage = ['status' => 1];
-        if(isset($data['title'])) $dataPage['global_title'] = $data['title'];
+        $dataCategory = ['status' => 1];
+        if(isset($data['title'])) $dataCategory['global_title'] = $data['title'];
         if(!isset($data['status'])) $data['status'] = 1;
         if(!isset($data['language_id'])) $data['language_id'] = $language;
 
-        $resultCreatePage = $this->updatePage($id, $dataPage);
+        $resultCreateCategory = $this->updateCategory($id, $dataCategory);
 
         /*No error*/
-        if(!$resultCreatePage['error'])
+        if(!$resultCreateCategory['error'])
         {
-            $page_id = $resultCreatePage['page_id'];
-            $resultUpdatePageContent = $this->updatePageContent($page_id, $language, $data);
-            $resultUpdatePageContent['page_id'] = $page_id;
-            return $resultUpdatePageContent;
+            $category_id = $resultCreateCategory['category_id'];
+            $resultUpdateCategoryContent = $this->updateCategoryContent($category_id, $language, $data);
+            $resultUpdateCategoryContent['category_id'] = $category_id;
+            return $resultUpdateCategoryContent;
         }
-        return $resultCreatePage;
+        return $resultCreateCategory;
     }
 }
