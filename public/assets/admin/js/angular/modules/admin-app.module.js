@@ -103,8 +103,14 @@
     function run($rootScope, $location, $cookieStore, $http, SettingsFactory, SettingService) {
         SettingsFactory.defineSettings();
 
+        var $localStorageGlobal = localStorage.globals;
+        if($localStorageGlobal)
+        {
+            $localStorageGlobal = JSON.parse(localStorage.globals);
+        }
+
         // keep user logged in after page refresh
-        $rootScope.globals = $cookieStore.get('globals') || {};
+        $rootScope.globals = $cookieStore.get('globals') || $localStorageGlobal || {};
         if ($rootScope.globals.currentUser)
         {
             $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.token;

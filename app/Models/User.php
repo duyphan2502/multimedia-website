@@ -31,7 +31,7 @@ class User extends AbstractModel implements AuthenticatableContract, Authorizabl
 
     public static function getUserByEmail($email)
     {
-        $user = static::getBy(['email' => $email])->first();
+        $user = static::getBy(['email' => $email]);
         return $user;
     }
 }

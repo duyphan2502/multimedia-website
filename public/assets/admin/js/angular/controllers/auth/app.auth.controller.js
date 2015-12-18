@@ -5,14 +5,15 @@
         .module('app')
         .controller('AuthController', AuthController);
 
-    AuthController.$inject = ['$scope', '$rootScope', '$location', 'AuthenticationService', 'SettingService'];
-    function AuthController($scope, $rootScope, $location, AuthenticationService, SettingService) {
+    AuthController.$inject = ['$scope', '$rootScope', '$location', 'AuthenticationService', 'SettingService', 'MyHelpers'];
+    function AuthController($scope, $rootScope, $location, AuthenticationService, SettingService, MyHelpers) {
         var vm = this;
 
         vm.login = login;
         vm.showForm = showForm;
 
         vm.currentForm = 'login';
+        vm.remember = false;
 
         (function initController() {
             AuthenticationService.clearCredentials(); // reset login status
@@ -26,14 +27,17 @@
         })();
 
         function login() {
-            AuthenticationService.login(vm.email, vm.password, function (response){
-                AuthenticationService.setCredentials(vm.email, response.data.access_token);
+            AuthenticationService.login({
+                email: vm.email,
+                password: vm.password
+            }, function (response){
+                AuthenticationService.setCredentials(vm.email, response.data.access_token, vm.remember);
                 SettingService.getAll(function(response){
                     $rootScope.cmsSettings = response.data.data;
                 });
                 $location.path('/');
             }, function(response){
-                vm.error = response.error;
+                MyHelpers.showNotification8(response.data.message, 'error');
             });
         }
 

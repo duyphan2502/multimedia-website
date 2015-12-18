@@ -17,13 +17,18 @@ abstract class BaseAdminController extends BaseController
         $this->middleware('auth');
     }
 
-    public function authenticateUser(Request $request, $data = null)
+    public function authenticateUser(Request $request)
     {
+        $result = [
+            'error' => true,
+            'response_code' => 401,
+            'message' => 'Wrong password or email'
+        ];
         $user = Models\User::getUserByEmail($request->get('email'));
         /*If user not exists or wrong password*/
         if(!$user || !\Hash::check($request->get('password'), $user->password))
         {
-            return response()->json($this->data, $this->data['response_code']);
+            return response()->json($result, $result['response_code']);
         }
         /*Save token*/
         if(!$user->login_token)
@@ -33,11 +38,12 @@ abstract class BaseAdminController extends BaseController
         $user->token_expired_at = Carbon::now()->addHour(24);
         $user->save();
 
-        $this->data = [
+        $result = [
             'error' => false,
             'response_code' => 200,
-            'access_token' => $user->login_token
+            'access_token' => $user->login_token,
+            'message' => 'Login successful.'
         ];
-        return response()->json($this->data, $this->data['response_code']);
+        return response()->json($result, $result['response_code']);
     }
 }

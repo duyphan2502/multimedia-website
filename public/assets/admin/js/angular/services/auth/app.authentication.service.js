@@ -15,12 +15,14 @@
 
         return service;
 
-        function login(email, password, callback, callbackError)
+        function login(user, callback, callbackError)
         {
-            return UserService.authUser(email, password, callback, callbackError);
+            return UserService.authUser(user.email, user.password, callback, callbackError);
         }
 
-        function setCredentials(email, token) {
+        function setCredentials(email, token, remember) {
+            if(!remember || remember != true) remember = false;
+
             $rootScope.globals = {
                 currentUser: {
                     email: email,
@@ -31,12 +33,19 @@
             $http.defaults.headers.common['Authorization'] = token;
             $cookieStore.put('globals', $rootScope.globals);
 
+            /*Remember user*/
+            if(remember)
+            {
+                localStorage.setItem('globals', JSON.stringify($rootScope.globals));
+            }
+
             $rootScope.settings.layout.isLogin = false;
         }
 
         function clearCredentials() {
             $rootScope.globals = {};
             $cookieStore.remove('globals');
+            localStorage.removeItem('globals');
             $http.defaults.headers.common.Authorization = null;
 
             $rootScope.settings.layout.isLogin = true;
