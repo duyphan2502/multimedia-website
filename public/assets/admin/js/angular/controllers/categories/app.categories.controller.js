@@ -5,18 +5,18 @@
         .module('app')
         .controller('CategoriesController', CategoriesController);
 
-    CategoriesController.$inject = ['$rootScope', '$scope', 'MyHelpers', 'PageService'];
-    function CategoriesController($rootScope, $scope, MyHelpers, PageService) {
+    CategoriesController.$inject = ['$rootScope', '$scope', 'MyHelpers', 'CategoryService'];
+    function CategoriesController($rootScope, $scope, MyHelpers, CategoryService) {
         var vm = this;
 
-        vm.pages = [];
+        vm.categories = [];
 
         vm.getStatus = getStatus;
         vm.showUpdateField = showUpdateField;
         vm.updateStatus = updateStatus;
         vm.cancelUpdate = cancelUpdate;
         vm.confirmUpdate = confirmUpdate;
-        vm.deletePage = deletePage;
+        vm.deleteCategory = deleteCategory;
 
         /*Search*/
         vm.handleSearch = handleSearch;
@@ -53,11 +53,11 @@
             },
             {
                 id: 'disable',
-                text: 'Disable these pages'
+                text: 'Disable these categories'
             },
             {
                 id: 'active',
-                text: 'Active these pages'
+                text: 'Active these categories'
             }
         ];
 
@@ -65,7 +65,7 @@
             $rootScope.bodyClass = 'page page-pages';
             $rootScope.pageTitle = 'All categories';
 
-            getAllPages({
+            getAllCategories({
                 page: vm.allParams.page,
                 per_page: vm.allParams.per_page
             });
@@ -75,23 +75,23 @@
             });
         })();
 
-        function getAllPages($params, callback) {
+        function getAllCategories($params, callback) {
             $rootScope.showLoadingState();
 
             vm.selectedItems = {};
             vm.checkedAllItems = false;
 
-            PageService.getAll($params, function (response) {
+            CategoryService.getAll($params, function (response) {
                 /*Successful*/
                 if ($params.per_page < 1) {
-                    vm.pages = response.data.data;
+                    vm.categories = response.data.data;
 
                     vm.allParams.page = 1;
-                    vm.totalItems = vm.pages.length;
+                    vm.totalItems = vm.categories.length;
                     vm.lastPage = 1;
                 }
                 else {
-                    vm.pages = response.data.data.data;
+                    vm.categories = response.data.data.data;
 
                     vm.allParams.page = response.data.data.current_page;
                     vm.allParams.per_page = response.data.data.per_page;
@@ -112,7 +112,7 @@
         /*Handle search*/
         function handleSearch() {
             vm.allParams.page = 1;
-            getAllPages(vm.allParams);
+            getAllCategories(vm.allParams);
         }
         function clearSearch() {
             vm.allParams.global_title = undefined;
@@ -121,12 +121,12 @@
 
         /*Pagination*/
         function paginationChanged() {
-            getAllPages(vm.allParams);
+            getAllCategories(vm.allParams);
         }
         /*Change items per page*/
         function perPageChanged() {
             vm.allParams.page = 1;
-            getAllPages(vm.allParams);
+            getAllCategories(vm.allParams);
         }
 
         /*Get status*/
@@ -164,13 +164,13 @@
             vm.fastEditData = {};
         }
         function confirmUpdate() {
-            updatePage(vm.currentSelectedItem.id, vm.fastEditData);
+            updateCategory(vm.currentSelectedItem.id, vm.fastEditData);
         }
 
         /*Update page*/
-        function updatePage($id, $data) {
-            PageService.updateGlobal($id, $data, function (response) {
-                getAllPages(vm.allParams);
+        function updateCategory($id, $data) {
+            CategoryService.updateGlobal($id, $data, function (response) {
+                getAllCategories(vm.allParams);
                 vm.isEditing = false;
                 vm.currentSelectedItem = null;
                 vm.fastEditData = {};
@@ -185,8 +185,8 @@
             var $data = {
                 status: $status
             };
-            PageService.updateGlobal($id, $data, function (response) {
-                getAllPages(vm.allParams);
+            CategoryService.updateGlobal($id, $data, function (response) {
+                getAllCategories(vm.allParams);
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
                 MyHelpers.showNotification8(response.data.message, 'error');
@@ -194,9 +194,9 @@
         }
 
         /*Delete page*/
-        function deletePage($id) {
-            PageService.deletePage($id, function (response) {
-                getAllPages(vm.allParams);
+        function deleteCategory($id) {
+            CategoryService.deleteCategory($id, function (response) {
+                getAllCategories(vm.allParams);
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
                 MyHelpers.showNotification8(response.data.message, 'error');
@@ -205,11 +205,11 @@
 
         /*Multi select pages*/
         function multiSelect() {
-            vm.selectedItems = MyHelpers.multiSelectDataTable(vm.checkedAllItems, vm.pages, vm.selectedItems);
+            vm.selectedItems = MyHelpers.multiSelectDataTable(vm.checkedAllItems, vm.categories, vm.selectedItems);
         }
         /*When user select all items => change scope checkedAllItems to true*/
         function changeSelect() {
-            MyHelpers.changeSelectDataTable(vm.pages, vm.selectedItems, function () {
+            MyHelpers.changeSelectDataTable(vm.categories, vm.selectedItems, function () {
                 vm.checkedAllItems = true;
             }, function () {
                 vm.checkedAllItems = false;
@@ -217,12 +217,12 @@
         }
         /*Handle group actions*/
         function handleGroupActions() {
-            PageService.updateGlobal(null, {
+            CategoryService.updateGlobal(null, {
                 is_group_action: true,
                 _group_action: vm.drCurrentGroupAction,
                 ids: MyHelpers.getGroupActionsSelectedIds(vm.selectedItems)
             }, function (response) {
-                getAllPages(vm.allParams);
+                getAllCategories(vm.allParams);
                 MyHelpers.showNotification8(response.data.message, 'success');
             }, function (response) {
                 MyHelpers.showNotification8(response.data.message, 'error');
