@@ -19,7 +19,9 @@
                 drSelectedItems: "=",
                 drGroupActions: '=',
                 drCurrentGroupAction: '=',
-                drHandleGroupActions: '&'
+                drHandleGroupActions: '&',
+                drDisablePageChange: '@',
+                drDisableGroupAction: '@'
             },
             link: function (scope, elm, attr, model) {
 
@@ -31,9 +33,11 @@
     }
 
     myDataTableController.$inject = ['$scope', 'MyHelpers'];
-    function myDataTableController($scope, MyHelpers)
-    {
+    function myDataTableController($scope, MyHelpers) {
         var dr = this;
+
+        dr.disablePageChange = (typeof $scope.drDisablePageChange != 'undefined') ? $scope.drDisablePageChange : 'false';
+        dr.disableGroupAction = (typeof $scope.drDisableGroupAction != 'undefined') ? $scope.drDisableGroupAction : 'false';
 
         /*Getting some helpers*/
         dr.countSelected = MyHelpers.countSelected;
@@ -44,28 +48,32 @@
 
         /*Group actions*/
         dr.handleGroupActions = handleGroupActions;
+        dr.changeGroupActions = changeGroupActions;
 
         (function initController() {
 
         })();
 
-        function onPaginationChanged()
-        {
-            setTimeout(function(){
+        function onPaginationChanged() {
+            setTimeout(function () {
                 $scope.drPaginationChanged();
             }, 100);
         }
-        function onPerPageChanged()
-        {
-            setTimeout(function(){
+
+        function onPerPageChanged() {
+            setTimeout(function () {
                 $scope.drPaginationChanged();
             }, 100);
         }
-        function handleGroupActions()
-        {
-            setTimeout(function(){
+
+        function handleGroupActions() {
+            setTimeout(function () {
                 $scope.drHandleGroupActions();
             }, 100);
+        }
+
+        function changeGroupActions(action) {
+            $scope.drCurrentGroupAction = action;
         }
     }
 })();

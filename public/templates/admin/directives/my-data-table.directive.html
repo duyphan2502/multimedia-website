@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8 col-sm-12">
+    <div class="col-md-8 col-sm-12" ng-if="dr.disablePageChange != 'true'">
         <div class="pull-left pagination-wrapper">
             <uib-pagination
                     previous-text="&lsaquo;"
@@ -31,13 +31,13 @@
             </label>
         </div>
     </div>
-    <div class="col-md-4 col-sm-12 text-right">
+    <div class="col-md-4 col-sm-12 text-right pull-right" ng-if="dr.disableGroupAction != 'true'">
         <div class="table-group-actions pull-right">
             <span ng-if="dr.countSelected(drSelectedItems) > 0">{{ dr.countSelected(drSelectedItems) }} items selected &nbsp;</span>
             <select class="table-group-action-input form-control input-inline input-small input-sm"
                     ng-model="drCurrentGroupAction"
+                    ng-change="dr.changeGroupActions(drCurrentGroupAction)"
                     ng-options="item.id as item.text for item in drGroupActions">
-
             </select>
             <button class="btn btn-sm green"
                     ng-disabled="drCurrentGroupAction == null || dr.countSelected(drSelectedItems) < 1"
@@ -56,7 +56,7 @@
 </div>
 <div ng-transclude></div>
 <div class="row">
-    <div class="col-md-8 col-sm-12">
+    <div class="col-md-8 col-sm-12" ng-if="!drDisablePageChange">
         <div class="pull-left pagination-wrapper">
             <uib-pagination
                     previous-text="&lsaquo;"

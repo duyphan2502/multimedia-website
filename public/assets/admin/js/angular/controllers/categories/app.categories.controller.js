@@ -23,7 +23,7 @@
         vm.clearSearch = clearSearch;
         vm.allParams = {
             page: 1,
-            per_page: 10
+            per_page: 0
         };
 
         /*Fast edit page*/
@@ -36,8 +36,6 @@
         vm.perPageChanged = perPageChanged;
         //vm.allParams.page = 1;
         vm.totalItems = 0;
-        vm.maxSize = 3;
-        vm.lastPage = 1;
 
         /*Group actions*/
         vm.multiSelect = multiSelect;
@@ -88,7 +86,6 @@
 
                     vm.allParams.page = 1;
                     vm.totalItems = vm.categories.length;
-                    vm.lastPage = 1;
                 }
                 else {
                     vm.categories = response.data.data.data;
@@ -96,7 +93,6 @@
                     vm.allParams.page = response.data.data.current_page;
                     vm.allParams.per_page = response.data.data.per_page;
                     vm.totalItems = response.data.data.total;
-                    vm.lastPage = response.data.data.last_page;
                 }
 
                 App.initComponents();
@@ -125,7 +121,6 @@
         }
         /*Change items per page*/
         function perPageChanged() {
-            vm.allParams.page = 1;
             getAllCategories(vm.allParams);
         }
 
@@ -134,17 +129,17 @@
             switch (status) {
                 case 0:
                 {
-                    return '<span class="label label-default">disabled</span>';
+                    return '<span class="label label-default label-sm">disabled</span>';
                 }
                     break;
                 case 1:
                 {
-                    return '<span class="label label-success">activated</span>';
+                    return '<span class="label label-success label-sm">activated</span>';
                 }
                     break;
                 default:
                 {
-                    return '<span class="label label-default">disabled</span>';
+                    return '<span class="label label-default label-sm">disabled</span>';
                 }
                     break;
             }

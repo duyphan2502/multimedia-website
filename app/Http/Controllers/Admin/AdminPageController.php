@@ -84,7 +84,7 @@ class AdminPageController extends BaseAdminController
         {
             return $this->_GroupAction($request, $page);
         }
-        $data = $request->except(['is_group_action', '_group_action', 'ids']);
+        $data = $request->except(['is_group_action', 'group_action', 'ids']);
         /*Just update some fields, not create new*/
         $result = $page->updatePage($id, $data, true);
         return response()->json($result, $result['response_code']);

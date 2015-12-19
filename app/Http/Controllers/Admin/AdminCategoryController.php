@@ -86,7 +86,7 @@ class AdminCategoryController extends BaseAdminController
         {
             return $this->_GroupAction($request, $category);
         }
-        $data = $request->except(['is_group_action', '_group_action', 'ids']);
+        $data = $request->except(['is_group_action', 'group_action', 'ids']);
         /*Just update some fields, not create new*/
         $result = $category->updateCategory($id, $data, true);
         return response()->json($result, $result['response_code']);
@@ -141,7 +141,7 @@ class AdminCategoryController extends BaseAdminController
         }
 
         /*Just update some fields, not create new*/
-        $this->data = $category->updateCategory($ids, $data, true);
+        $this->data = $category->updateCategories($ids, $data, true);
         return response()->json($this->data, $this->data['response_code']);
     }
 }
