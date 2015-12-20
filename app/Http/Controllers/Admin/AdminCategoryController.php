@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminCategoryController extends BaseAdminController
 {
+    var $data = [
+        'error' => true,
+        'response_code' => 500
+    ];
+
     public function __construct()
     {
         parent::__construct();
-
-        $this->data = [
-            'error' => true,
-            'response_code' => 500
-        ];
     }
 
     public function getIndex(Request $request)
@@ -29,18 +29,78 @@ class AdminCategoryController extends BaseAdminController
         $fields = $request->except(['page', 'per_page']);
 
         $getByFields = [];
-        if(isset($fields['global_title']))
-        {
+        if (isset($fields['global_title'])) {
             $getByFields['global_title'] = ['compare' => 'LIKE', 'value' => $fields['global_title']];
         }
 
-        $categories = Category::searchBy($getByFields, ['created_at' => 'desc'], true, $request->get('per_page', 10));
+        if(sizeof($getByFields) > 0)
+        {
+            $categories = Category::searchBy($getByFields, ['created_at' => 'desc'], true, $request->get('per_page', 0))->toArray();
+        }
+        else
+        {
+            $categories = $this->_recursiveGetCategories($request, 0);
+            $categories = $this->_recursiveShowCategoriesWithSub($categories, 0);
+        }
+
         $this->data = [
             'error' => false,
             'response_code' => 200,
-            'data' => $categories->toArray()
+            'data' => $categories
         ];
         return response()->json($this->data, $this->data['response_code']);
+    }
+
+    private function _recursiveGetCategories($request, $parentId)
+    {
+        $results = [];
+        $getByFields = [
+            'parent_id' => $parentId
+        ];
+        $categories = Category::getBy($getByFields, ['global_title' => 'asc'], true, 0);
+
+        foreach ($categories as $key => $row)
+        {
+            $row->childrenCategories = $this->_recursiveGetCategories($request, $row->id);
+            array_push($results, $row);
+        }
+        return $results;
+    }
+
+    private function _recursiveShowCategoriesWithSub($categories, $level = 0, $subText = '——')
+    {
+        $result = [];
+
+        $childText = '';
+        if($level > 0)
+        {
+            for ($i=0; $i < $level; $i++)
+            {
+                $childText .= $subText;
+            }
+        }
+        foreach ($categories as $key => $row)
+        {
+            $data = [
+                'id' => $row->id,
+                'parent_id' => $row->parent_id,
+                'global_title' => $row->global_title,
+                'sub_title' => $childText,
+                'status' => $row->status,
+                'created_at' => $row->created_at->toDateTimeString(),
+                'updated_at' => $row->updated_at->toDateTimeString()
+            ];
+            array_push($result, $data);
+            if(sizeof($row->childrenCategories) > 0)
+            {
+                $childrenCategories = $this->_recursiveShowCategoriesWithSub($row->childrenCategories, $level + 1, $subText);
+                foreach ($childrenCategories as $keyChild => $childRow)
+                {
+                    array_push($result, $childRow);
+                }
+            }
+        }
+        return $result;
     }
 
     public function getDetails(Request $request, $id, $language)
@@ -49,11 +109,9 @@ class AdminCategoryController extends BaseAdminController
             'error' => false,
             'response_code' => 200
         ];
-        if(!$id == 0)
-        {
+        if (!$id == 0) {
             $category = Category::find($id);
-            if(!$category)
-            {
+            if (!$category) {
                 $this->data = [
                     'error' => true,
                     'response_code' => 404,
@@ -64,8 +122,7 @@ class AdminCategoryController extends BaseAdminController
             $category = Category::getCategoryById($id, $language);
 
             /*Create new if not exists*/
-            if(!$category)
-            {
+            if (!$category) {
                 $category = new CategoryContent();
                 $category->language_id = $language;
                 $category->category_id = $id;
@@ -82,11 +139,10 @@ class AdminCategoryController extends BaseAdminController
 
     public function postEditGlobal(Request $request, Category $category, $id = null)
     {
-        if($request->get('is_group_action') == true)
-        {
+        if ($request->get('is_group_action') == true) {
             return $this->_GroupAction($request, $category);
         }
-        $data = $request->except(['is_group_action', 'group_action', 'ids']);
+        $data = $request->except(['is_group_action', 'group_action', 'ids', 'sub_title']);
         /*Just update some fields, not create new*/
         $result = $category->updateCategory($id, $data, true);
         return response()->json($result, $result['response_code']);
@@ -95,12 +151,9 @@ class AdminCategoryController extends BaseAdminController
     public function postEdit(Request $request, Category $category, $id, $language)
     {
         $data = $request->all();
-        if($id == 0)
-        {
+        if ($id == 0) {
             $result = $category->createCategory($id, $language, $data);
-        }
-        else
-        {
+        } else {
             $result = $category->updateCategoryContent($id, $language, $data);
         }
         return response()->json($result, $result['response_code']);
@@ -119,25 +172,24 @@ class AdminCategoryController extends BaseAdminController
 
         $ids = $request->get('ids');
 
-        if(!$ids) return response()->json($this->data, $this->data['response_code']);
+        if (!$ids) return response()->json($this->data, $this->data['response_code']);
 
         $data = [];
-        switch($request->get('group_action'))
-        {
-            case 'disable':
-            {
+        switch ($request->get('group_action')) {
+            case 'disable': {
                 $data['status'] = 0;
-            } break;
-            case 'active':
-            {
+            }
+                break;
+            case 'active': {
                 $data['status'] = 1;
-            } break;
-            default:
-            {
+            }
+                break;
+            default: {
                 /*No action*/
                 $this->data['message'] = 'Not allowed task.';
                 return response()->json($this->data, $this->data['response_code']);
-            } break;
+            }
+                break;
         }
 
         /*Just update some fields, not create new*/

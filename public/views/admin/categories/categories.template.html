@@ -86,6 +86,7 @@
                             </label>
                         </td>
                         <td>
+                            <span ng-bind="item.sub_title" ng-if="vm.isEditing != true || vm.currentSelectedItem.id != item.id"></span>
                             <a ui-sref="pageDetails({id: item.id, lang: cmsSettings.default_language})"
                                ng-bind="item.global_title"
                                ng-if="vm.isEditing != true || vm.currentSelectedItem.id != item.id"
