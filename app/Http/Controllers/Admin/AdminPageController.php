@@ -73,7 +73,7 @@ class AdminPageController extends BaseAdminController
             $getByFields['global_title'] = ['compare' => 'LIKE', 'value' => $request->get('global_title')];
         }
 
-        $items = Page::searchBy($getByFields, ['created_at' => 'desc'], true, $limit);
+        $items = Page::searchBy($getByFields, [$orderBy => $orderType], true, $limit);
 
         $iTotalRecords = $items->total();
         $sEcho = intval($request->get('sEcho'));
