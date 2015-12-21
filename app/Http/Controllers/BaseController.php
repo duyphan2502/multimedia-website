@@ -9,6 +9,8 @@ use App\Models;
 
 abstract class BaseController extends Controller
 {
+    protected $adminCpAccess = 'admin';
+    
     public function __construct()
     {
         $this->settings = Models\Setting::getAllSettings();
