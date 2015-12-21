@@ -34,7 +34,7 @@ class Category extends AbstractModel
 
     protected $rulesEditContent = [
         'title' => 'required|max:255',
-        'slug' => 'required|max:255|unique:page_contents',
+        'slug' => 'required|max:255|unique:category_contents',
         'language_id' => 'min:1|integer|required',
         'description' => 'max:1000',
         'content' => 'max:5000|string',
@@ -60,7 +60,7 @@ class Category extends AbstractModel
             ->join('languages', 'languages.id', '=', 'category_contents.language_id')
             ->where('categories.id', '=', $id)
             ->where('category_contents.language_id', '=', $languageId)
-            ->select('categories.global_title', 'category_contents.*')
+            ->select('categories.global_title', 'categories.parent_id', 'category_contents.*')
             ->first();
     }
 
@@ -169,10 +169,8 @@ class Category extends AbstractModel
         {
             $categoryContent = new CategoryContent();
             $categoryContent->language_id = $languageId;
-            $categoryContent->page_id = $id;
+            $categoryContent->category_id = $id;
             $categoryContent->save();
-
-            //$categoryContent = static::getCategoryContentByCategoryId($id, $languageId);
         }
 
         $validate = $this->validateData($data, $this->rulesEditContent);
@@ -238,7 +236,7 @@ class Category extends AbstractModel
             {
                 $result['error'] = false;
                 $result['response_code'] = 200;
-                $result['messages'][] = 'Delete page completed!';
+                $result['messages'][] = 'Delete category completed!';
             }
         }
         else

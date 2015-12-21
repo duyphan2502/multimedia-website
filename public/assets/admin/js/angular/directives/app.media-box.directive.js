@@ -174,6 +174,7 @@
         {
             if(type == 'image')
             {
+                if(!$scope.drModel) return '/theme/admin/images/no-image.png';
                 return $scope.drModel;
             }
             return '/theme/admin/images/file.png';

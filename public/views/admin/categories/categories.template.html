@@ -7,7 +7,7 @@
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
-                <a ui-sref="pageDetails({id: 0, lang: cmsSettings.default_language})"
+                <a ui-sref="categoryDetails({id: 0, lang: cmsSettings.default_language})"
                    class="btn btn-circle green font-white btn-default btn-sm">
                     <i class="fa fa-check"></i> Create
                 </a>
@@ -53,7 +53,7 @@
                                 </div>
                             </label>
                         </th>
-                        <th>Page title (global)</th>
+                        <th>Category title (global)</th>
                         <th>Status</th>
                         <th>Created at</th>
                         <th>Actions</th>
@@ -87,7 +87,7 @@
                         </td>
                         <td>
                             <span ng-bind="item.sub_title" ng-if="vm.isEditing != true || vm.currentSelectedItem.id != item.id"></span>
-                            <a ui-sref="pageDetails({id: item.id, lang: cmsSettings.default_language})"
+                            <a ui-sref="categoryDetails({id: item.id, lang: cmsSettings.default_language})"
                                ng-bind="item.global_title"
                                ng-if="vm.isEditing != true || vm.currentSelectedItem.id != item.id"
                                title="Edit"></a>
@@ -122,9 +122,9 @@
                             </button>
                             <button type="button"
                                     class="btn btn-success btn-xs"
-                                    title="Active this page"
+                                    title="Active this category"
                                     mwl-confirm
-                                    message="Are you sure you wanna active this page?"
+                                    message="Are you sure you wanna active this category?"
                                     confirm-text="Yes <i class='fa fa-check'></i>"
                                     cancel-text="No <i class='fa fa-times'></i>"
                                     placement="top"
@@ -136,9 +136,9 @@
                             </button>
                             <button type="button"
                                     class="btn btn-warning btn-xs"
-                                    title="Disable this page"
+                                    title="Disable this category"
                                     mwl-confirm
-                                    message="Are you sure you wanna disable this page?"
+                                    message="Are you sure you wanna disable this category?"
                                     confirm-text="Yes <i class='fa fa-check'></i>"
                                     cancel-text="No <i class='fa fa-times'></i>"
                                     placement="top"
@@ -150,16 +150,16 @@
                             </button>
                             <button type="button"
                                     class="btn btn-danger btn-xs"
-                                    title="Remove this page"
+                                    title="Remove this category"
                                     ng-if="vm.currentSelectedItem.id != item.id"
                                     mwl-confirm
-                                    message="Are you sure you wanna delete this page?"
+                                    message="Are you sure you wanna delete this category?"
                                     confirm-text="Yes <i class='fa fa-check'></i>"
                                     cancel-text="No <i class='fa fa-times'></i>"
                                     placement="top"
                                     confirm-button-type="danger"
                                     cancel-button-type="success"
-                                    on-confirm="vm.deletePage(item.id)">
+                                    on-confirm="vm.deleteCategory(item.id)">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </td>

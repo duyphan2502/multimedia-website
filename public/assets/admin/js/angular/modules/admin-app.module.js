@@ -24,7 +24,7 @@
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         /*Catch 401 error => return to login page*/
-        $httpProvider.interceptors.push(['$q', '$location', '$rootScope', function ($q, $location, $rootScope) {
+        $httpProvider.interceptors.push(['$q', '$location', '$rootScope', 'MyHelpers', function ($q, $location, $rootScope, MyHelpers) {
             return {
                 'request': function(config) {
                     $rootScope.showLoadingState();
@@ -41,6 +41,7 @@
                 'responseError': function(rejection) {
                     $rootScope.hideLoadingState();
                     if (rejection.status === 401) {
+                        MyHelpers.showNotification8('Your session time out. Please login to continue', 'error');
                         $location.path('login');
                     }
                     return $q.reject(rejection);
@@ -88,7 +89,7 @@
             .state('categoryDetails', {
                 url: "/categories/{id:[0-9]*}/{lang:[0-9]*}",
                 templateUrl: viewsUrl + "categories/category-details.template.html",
-                controller: "PageDetailsController",
+                controller: "CategoryDetailsController",
                 controllerAs: "vm"
             })
             .state('settings', {

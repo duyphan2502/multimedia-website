@@ -169,9 +169,24 @@
                 vm.isEditing = false;
                 vm.currentSelectedItem = null;
                 vm.fastEditData = {};
-                MyHelpers.showNotification8(response.data.message, 'success');
+
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'success');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'success');
+                }
             }, function (response) {
-                MyHelpers.showNotification8(response.data.message, 'error');
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'error');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'error');
+                }
             });
         }
 
@@ -182,9 +197,24 @@
             };
             CategoryService.updateGlobal($id, $data, function (response) {
                 getAllCategories(vm.allParams);
-                MyHelpers.showNotification8(response.data.message, 'success');
+
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'success');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'success');
+                }
             }, function (response) {
-                MyHelpers.showNotification8(response.data.message, 'error');
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'error');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'error');
+                }
             });
         }
 
@@ -192,9 +222,23 @@
         function deleteCategory($id) {
             CategoryService.deleteCategory($id, function (response) {
                 getAllCategories(vm.allParams);
-                MyHelpers.showNotification8(response.data.message, 'success');
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'success');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'success');
+                }
             }, function (response) {
-                MyHelpers.showNotification8(response.data.message, 'error');
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'error');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'error');
+                }
             });
         }
 
@@ -218,9 +262,24 @@
                 ids: MyHelpers.getGroupActionsSelectedIds(vm.selectedItems)
             }, function (response) {
                 getAllCategories(vm.allParams);
-                MyHelpers.showNotification8(response.data.message, 'success');
+
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'success');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'success');
+                }
             }, function (response) {
-                MyHelpers.showNotification8(response.data.message, 'error');
+                if(response.data.hasOwnProperty('messages'))
+                {
+                    MyHelpers.showNotification8(response.data.messages, 'error');
+                }
+                if(response.data.hasOwnProperty('message'))
+                {
+                    MyHelpers.showNotification8(response.data.message, 'error');
+                }
             });
         }
     }

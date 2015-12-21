@@ -1,0 +1,10 @@
+<label ng-bind-html="drLabel" class="label-top"></label>
+<select
+        name="{{ drName }}"
+        class="{{ drClass }}"
+        ng-options="item.id as (item.sub_title + item.global_title) for item in dr.categories"
+        ng-change="drChange()"
+        ng-model="bindModel">
+    <option value=""></option>
+</select>
+<label ng-bind-html="drLabel" class="label-bottom"></label>

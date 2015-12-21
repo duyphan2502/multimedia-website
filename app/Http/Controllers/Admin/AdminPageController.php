@@ -93,6 +93,11 @@ class AdminPageController extends BaseAdminController
     public function postEdit(Request $request, Page $page, $id, $language)
     {
         $data = $request->all();
+        if(!$data['slug'])
+        {
+            $data['slug'] = str_slug($data['title']);
+        }
+
         if($id == 0)
         {
             $result = $page->createPage($id, $language, $data);

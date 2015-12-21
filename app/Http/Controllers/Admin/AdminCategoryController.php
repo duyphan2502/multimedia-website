@@ -51,6 +51,12 @@ class AdminCategoryController extends BaseAdminController
         return response()->json($this->data, $this->data['response_code']);
     }
 
+    /*
+     * Get all categories with children node.
+     * @param $request: instance of Request
+     * @param $parentId: parent_id.
+     * @return array
+     * */
     private function _recursiveGetCategories($request, $parentId)
     {
         $results = [];
@@ -67,6 +73,13 @@ class AdminCategoryController extends BaseAdminController
         return $results;
     }
 
+    /*
+     * When get categories, auto add sub text to each element.
+     * @param $categories: A list categories
+     * @param $level: level of category
+     * @param $subText: sub text
+     * @return array
+     * */
     private function _recursiveShowCategoriesWithSub($categories, $level = 0, $subText = '——')
     {
         $result = [];
@@ -130,6 +143,7 @@ class AdminCategoryController extends BaseAdminController
 
                 $category = Category::getCategoryById($id, $language);
             }
+
             $this->data['data'] = $category->toArray();
         }
         /*If id == 0 ==> create category.*/
@@ -150,7 +164,33 @@ class AdminCategoryController extends BaseAdminController
 
     public function postEdit(Request $request, Category $category, $id, $language)
     {
-        $data = $request->all();
+        $data = $request->except('parent_id');
+        $slug = $request->get('slug', null);
+        $title = $request->get('title', null);
+        if(!$slug)
+        {
+            $data['slug'] = str_slug($title);
+        }
+        /*Update parent_id*/
+        $parent_id = $request->get('parent_id', 0);
+        if(!$parent_id || (int)$parent_id == (int)$id)
+        {
+            $dataGlobal = [
+                'parent_id' => 0
+            ];
+        }
+        else
+        {
+            $dataGlobal = [
+                'parent_id' => $parent_id
+            ];
+        }
+        $result = $category->updateCategory($id, $dataGlobal, true);
+        if($result['error'] == true)
+        {
+            return response()->json($result, $result['response_code']);
+        }
+
         if ($id == 0) {
             $result = $category->createCategory($id, $language, $data);
         } else {
@@ -161,7 +201,28 @@ class AdminCategoryController extends BaseAdminController
 
     public function deleteDelete(Request $request, Category $category, $id)
     {
+        /*Delete base category*/
         $result = $category->deleteCategory($id);
+        if(!$result['error'])
+        {
+            $result['message'] = 'Category deleted';
+            /*Update child categories*/
+            $relatedContent = Category::where('parent_id', $id)->get();
+            $subCategories = [];
+            foreach($relatedContent as $key => $row)
+            {
+                array_push($subCategories, $row->id);
+            }
+            $resultRelated = $category->updateCategories($subCategories, [
+                'parent_id' => 0
+            ], true);
+            if($resultRelated['error'])
+            {
+                $resultRelated['message'] = 'Error when update related categories';
+            }
+            $result['messages'] = $resultRelated['message'];
+        }
+
         return response()->json($result, $result['response_code']);
     }
 
