@@ -12,6 +12,12 @@ $(window).load(function () {
     function init() {
         inputPlaceholders();
         Utility.detectIE();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     }
 
     init();

@@ -93,13 +93,7 @@ var Datatable = function() {
                         },
                         "dataSrc": function(res) { // Manipulate the data returned from the server
                             if (res.customActionMessage) {
-                                App.alert({
-                                    type: (res.customActionStatus == 'OK' ? 'success' : 'danger'),
-                                    icon: (res.customActionStatus == 'OK' ? 'check' : 'warning'),
-                                    message: res.customActionMessage,
-                                    container: tableWrapper,
-                                    place: 'prepend'
-                                });
+                                Utility.showNotification(res.customActionMessage, (res.customActionStatus == 'OK' ? 'success' : 'danger'));
                             }
 
                             if (res.customActionStatus) {
@@ -125,14 +119,7 @@ var Datatable = function() {
                             if (tableOptions.onError) {
                                 tableOptions.onError.call(undefined, the);
                             }
-
-                            App.alert({
-                                type: 'danger',
-                                icon: 'warning',
-                                message: tableOptions.dataTable.language.metronicAjaxRequestGeneralError,
-                                container: tableWrapper,
-                                place: 'prepend'
-                            });
+                            Utility.showNotification(tableOptions.dataTable.language.metronicAjaxRequestGeneralError, 'danger');
 
                             App.unblockUI(tableContainer);
                         }

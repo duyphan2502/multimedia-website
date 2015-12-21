@@ -9,37 +9,97 @@ use App\Models;
 
 use App\Models\Page;
 use App\Models\PageContent;
-use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Pagination\Paginator;
 
 class AdminPageController extends BaseAdminController
 {
+    var $bodyClass = 'page-controller';
     public function __construct()
     {
         parent::__construct();
 
-        $this->data = [
-            'error' => true,
-            'response_code' => 500
-        ];
+        $this->_setPageTitle('Pages', 'manage static pages.');
+        $this->_setBodyClass($this->bodyClass);
     }
 
     public function getIndex(Request $request)
     {
-        $fields = $request->except(['page', 'per_page']);
+        $this->_setBodyClass($this->bodyClass.' pages-list-page');
+        return $this->viewAdmin('pages.index');
+    }
+
+    public function postIndex(Request $request)
+    {
+        /**
+         * Paging
+         **/
+        $offset = $request->get('start', 0);
+        $limit = $request->get('length', 10);
+        $paged = ($offset + $limit) / $limit;
+        Paginator::currentPageResolver(function() use ($paged) {
+            return $paged;
+        });
+
+        $records = [];
+        $records["data"] = [];
+
+        /*
+        * Sortable data
+        */
+        $orderBy = $request->get('order')[0]['column'];
+        switch ($orderBy) {
+            case 1:
+            {
+                $orderBy = 'id';
+            }
+                break;
+            case 2:
+            {
+                $orderBy = 'global_title';
+            }
+                break;
+            default:
+            {
+                $orderBy = 'created_at';
+            }
+                break;
+        }
+        $orderType = $request->get('order')[0]['dir'];
 
         $getByFields = [];
-        if(isset($fields['global_title']))
+        if($request->get('global_title', null))
         {
-            $getByFields['global_title'] = ['compare' => 'LIKE', 'value' => $fields['global_title']];
+            $getByFields['global_title'] = ['compare' => 'LIKE', 'value' => $request->get('global_title')];
         }
 
-        $pages = Page::searchBy($getByFields, ['created_at' => 'desc'], true, $request->get('per_page', 10));
-        $this->data = [
-            'error' => false,
-            'response_code' => 200,
-            'data' => $pages->toArray()
-        ];
-        return response()->json($this->data, $this->data['response_code']);
+        $items = Page::searchBy($getByFields, ['created_at' => 'desc'], true, $limit);
+
+        $iTotalRecords = $items->total();
+        $sEcho = intval($request->get('sEcho'));
+
+        foreach ($items as $key => $row)
+        {
+            $status = '<span class="label label-success label-sm">Activated</span>';
+            if($row->status != 1)
+            {
+                $status = '<span class="label label-danger label-sm">Disabled</span>';
+            }
+            $records["data"][] = array(
+                '<input type="checkbox" name="id[]" value="'.$row->id.'">',
+                $row->id,
+                $row->global_title,
+                $status,
+                $row->created_at->toDateTimeString(),
+                ''
+            );
+        }
+
+        $records["sEcho"] = $sEcho;
+        $records["iTotalRecords"] = $iTotalRecords;
+        $records["iTotalDisplayRecords"] = $iTotalRecords;
+
+        return response()->json($records);
     }
 
     public function getDetails(Request $request, $id, $language)

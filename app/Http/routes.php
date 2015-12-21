@@ -23,7 +23,7 @@ $router->group(['namespace' => 'Admin', 'prefix' => $adminCpAccess], function($r
     $router->controller('auth', 'AdminAuthController');
 
     $router->get('/', function () use($adminCpAccess) {
-        return redirect()->to($adminCpAccess.'/pages');
+        return redirect()->to($adminCpAccess.'/dashboard');
     });
 
     /*Dashboard*/

@@ -11,6 +11,7 @@
     <title>Admin dashboard</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="Admin dashboard - Tedozi CMS" name="description"/>
     <meta content="duyphan.developer@gmail.com" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -27,6 +28,10 @@
     <link href="{{ asset('assets/admin/core/third_party/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/admin/core/third_party/notific8/jquery.notific8.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS -->
+
+    <!-- OTHER PLUGINS -->
+    @yield('css')
+    <!-- END OTHER PLUGINS -->
 
     <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="{{ asset('theme/admin/assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css"/>
@@ -108,6 +113,10 @@
 <script src="{{ asset('assets/admin/core/third_party/notific8/jquery.notific8.min.js') }}" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 
+<!-- OTHER PLUGINS -->
+@yield('js')
+<!-- END OTHER PLUGINS -->
+
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="{{ asset('theme/admin/assets/global/scripts/app.js') }}" type="text/javascript"></script>
 <!-- END THEME GLOBAL SCRIPTS -->
@@ -115,6 +124,10 @@
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <script src="{{ asset('assets/admin/dist/app.min.js') }}" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
+
+<!-- JS INIT -->
+@yield('js-init')
+<!-- JS INIT -->
 
 @include('admin/shared/_flash-messages')
 
