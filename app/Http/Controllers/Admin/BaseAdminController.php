@@ -17,33 +17,18 @@ abstract class BaseAdminController extends BaseController
         $this->middleware('auth');
     }
 
-    public function authenticateUser(Request $request)
+    public function _setPageTitle($title, $subTitle = '')
     {
-        $result = [
-            'error' => true,
-            'response_code' => 401,
-            'message' => 'Wrong password or email'
-        ];
-        $user = Models\User::getUserByEmail($request->get('email'));
-        /*If user not exists or wrong password*/
-        if(!$user || !\Hash::check($request->get('password'), $user->password))
-        {
-            return response()->json($result, $result['response_code']);
-        }
-        /*Save token*/
-        if(!$user->login_token)
-        {
-            $user->login_token = md5($user->id.$user->email.time());
-        }
-        $user->token_expired_at = Carbon::now()->addHour(24);
-        $user->save();
+        view()->share([
+            'pageTitle' => $title,
+            'subPageTitle' => $subTitle
+        ]);
+    }
 
-        $result = [
-            'error' => false,
-            'response_code' => 200,
-            'access_token' => $user->login_token,
-            'message' => 'Login successful.'
-        ];
-        return response()->json($result, $result['response_code']);
+    public function _setBodyClass($class)
+    {
+        view()->share([
+            'bodyClass' => $class
+        ]);
     }
 }

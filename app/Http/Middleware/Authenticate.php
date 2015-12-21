@@ -40,27 +40,9 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if($request->ajax())
-        {
-            $authorization = $request->header('authorization');
-            if($authorization && $authorization != 'null')
-            {
-                $user = Models\User::getBy(['login_token' => $authorization]);
-                if($user && Carbon::now() < $user->token_expired_at)
-                {
-                    return $next($request);
-                }
-            }
-            return response()->json([
-                'error' => true,
-                'response_code' => 401,
-                'message' => 'You did not login or your session timeout.'
-            ], 401);
-        }
-
         if ($this->auth->guest())
         {
-            return redirect()->guest('auth/login');
+            return redirect()->guest('admin/auth/login');
         }
         return $next($request);
     }

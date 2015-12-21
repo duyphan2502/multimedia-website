@@ -7,9 +7,8 @@ var path = {
     bower: './bower_components/',
     npm: './node_modules/',
     core: './assets/core/',
-    coreThirdParty: './assets/core/third_party/',
-    themeAdminAssets: './theme/admin/assets/',
-    themeAdminPlugins: './theme/admin/assets/global/plugins/'
+    coreAdminThirdParty: './assets/admin/core/third_party/',
+    themeAdminAssets: './theme/admin/assets/'
 };
 
 var gulp = require("gulp");
@@ -46,80 +45,59 @@ gulp.task("sassAdmin", function(){
 /*Min script*/
 gulp.task('coreMinJsAdmin', function() {
     gulp.src([
-            path.themeAdminPlugins + 'jquery.min.js',
+            path.coreAdminThirdParty + 'jquery.min.js',
             path.bower + 'jquery-placeholder/jquery.placeholder.min.js',
             path.bower + 'modernizr/modernizr.js',
             path.bower + 'bootstrap-sass/assets/javascripts/bootstrap.min.js',
-            path.themeAdminPlugins + 'js.cookie.min.js',
-            path.themeAdminPlugins + 'bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js',
-            path.themeAdminPlugins + 'jquery-slimscroll/jquery.slimscroll.min.js',
-            path.themeAdminPlugins + 'jquery.blockui.min.js',
-            path.themeAdminPlugins + 'uniform/jquery.uniform.min.js',
-            path.themeAdminPlugins + 'bootstrap-switch/js/bootstrap-switch.min.js',
-            path.themeAdminPlugins + 'bootstrap-modal/js/bootstrap-modalmanager.js',
-            path.themeAdminPlugins + 'bootstrap-modal/js/bootstrap-modal.js'
+            path.coreAdminThirdParty + 'js.cookie.min.js',
+            path.coreAdminThirdParty + 'bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js',
+            path.coreAdminThirdParty + 'jquery-slimscroll/jquery.slimscroll.min.js',
+            path.coreAdminThirdParty + 'jquery.blockui.min.js',
+            path.coreAdminThirdParty + 'uniform/jquery.uniform.min.js',
+            path.coreAdminThirdParty + 'bootstrap-switch/js/bootstrap-switch.min.js',
+            path.coreAdminThirdParty + 'bootstrap-modal/js/bootstrap-modalmanager.js',
+            path.coreAdminThirdParty + 'bootstrap-modal/js/bootstrap-modal.js',
+            path.bower + 'jquery-validation/dist/jquery.validate.min.js',
+            path.bower + 'jquery-validation/dist/additional-methods.min.js'
         ])
         .pipe(concat('core.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(path.distPathAdmin));
 });
-gulp.task('appMinJsAdmin', function() {
+gulp.task('scriptsAdmin', function() {
     gulp.src([
             path.themeAdminAssets + 'layouts/layout/scripts/layout.js',
-            path.baseAdmin + 'js/*.js'
+            path.baseAdmin + 'js/utility.js',
+            path.baseAdmin + 'js/script.js'
         ])
         .pipe(concat('app.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(path.distPathAdmin));
 });
-gulp.task('angularCoreMinJsAdmin', function() {
-    gulp.src([
-            path.bower + 'angular/angular.js',
-            path.bower + 'angular-ui-router/release/angular-ui-router.min.js',
-            path.bower + 'angular-resource/angular-resource.js',
-            path.bower + 'angular-animate/angular-animate.js',
-            path.bower + 'angular-cookies/angular-cookies.js',
-            path.bower + 'angular-messages/angular-messages.min.js',
-            path.bower + 'angular-sanitize/angular-sanitize.min.js',
-            path.bower + 'angular-touch/angular-touch.min.js',
-            path.bower + 'angular-bootstrap/ui-bootstrap-tpls.js',
-            path.bower + 'angular-bootstrap-confirm/dist/angular-bootstrap-confirm.min.js'
-        ])
-        .pipe(concat('angular-core.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(path.distPathAdmin));
-});
-gulp.task('scriptsAdmin', function() {
-    gulp.src([
-            path.baseAdmin + 'js/angular/modules/**/*.js',
-            path.baseAdmin + 'js/angular/controllers/**/*.js',
-            path.baseAdmin + 'js/angular/directives/**/*.js',
-            path.baseAdmin + 'js/angular/factories/**/*.js',
-            path.baseAdmin + 'js/angular/services/**/*.js'
-        ])
-        .pipe(concat('angular-app.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(path.distPathAdmin));
-});
-gulp.task('copyfonts', function() {
+gulp.task('copyFonts', function() {
     gulp.src([
             path.bower + 'bootstrap-sass/assets/fonts/**/*.{ttf,woff,woff2,eof,svg,otf}',
             path.bower + 'font-awesome-sass/assets/fonts/**/*.{ttf,woff,woff2,eof,svg,otf}'
         ])
         .pipe(gulp.dest(path.baseAdmin + 'fonts/'));
 });
+gulp.task('copyPagesJs', function() {
+    gulp.src([
+            path.baseAdmin + 'js/pages/**/*.js',
+        ])
+        .pipe(gulp.dest(path.distPathAdmin + 'pages/'));
+});
 
 /*Admin task*/
 gulp.task("admin", [
     'sassAdmin',
     'coreMinJsAdmin',
-    'appMinJsAdmin',
-    'angularCoreMinJsAdmin',
     'scriptsAdmin',
-    'copyfonts'
+    'copyFonts',
+    'copyPagesJs'
 ]);
 
 gulp.task("watchAdmin", function(){
     gulp.watch(path.baseAdmin + 'scss/**/*.scss', ['sassAdmin']);
-    gulp.watch(path.baseAdmin + 'js/**/*.js', ['scriptsAdmin']);
+    gulp.watch(path.baseAdmin + 'js/**/*.js', ['scriptsAdmin', 'copyPagesJs']);
 });

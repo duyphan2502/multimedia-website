@@ -15,4 +15,14 @@ abstract class BaseController extends Controller
 
         $this->defaultLanguage = (isset($this->settings['default_language']) ? $this->settings['default_language'] : 59);
     }
+
+    protected function viewAdmin($view, $data = [])
+    {
+        return view('admin.'.$view, $data);
+    }
+
+    protected function viewFront($view, $data = [])
+    {
+        return view('front.'.$view, $data);
+    }
 }

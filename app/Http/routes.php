@@ -11,16 +11,24 @@
 |
 */
 
-$router->get('/admin', function () {
-    return view('admin.master');
-});
-
 /*
 |--------------------------------------------------------------------------
 | START Routes for Admin actions
 |--------------------------------------------------------------------------
 */
-$router->group(['namespace' => 'Admin', 'prefix' => 'admin/api'], function($router) {
+$adminCpAccess = 'admin';
+view()->share('adminCpAccess', $adminCpAccess);
+$router->group(['namespace' => 'Admin', 'prefix' => $adminCpAccess], function($router) use($adminCpAccess) {
+    /*Auth*/
+    $router->controller('auth', 'AdminAuthController');
+
+    $router->get('/', function () use($adminCpAccess) {
+        return redirect()->to($adminCpAccess.'/pages');
+    });
+
+    /*Dashboard*/
+    $router->controller('dashboard', 'AdminDashboardController');
+
     /*Users*/
     $router->controller('users', 'AdminUserController');
 
