@@ -12,6 +12,8 @@ abstract class BaseController extends Controller
 {
     protected $adminCpAccess;
 
+    protected $loggedInUser = null;
+
     protected $errorMessages = [], $infoMessages = [], $successMessages = [], $warningMessages = [];
     
     protected function __construct()
@@ -55,6 +57,10 @@ abstract class BaseController extends Controller
                 $model = 'infoMessages';
             } break;
             case 'error':
+            {
+                $model = 'errorMessages';
+            } break;
+            case 'danger':
             {
                 $model = 'errorMessages';
             } break;
