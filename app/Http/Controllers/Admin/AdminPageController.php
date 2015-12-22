@@ -21,6 +21,8 @@ class AdminPageController extends BaseAdminController
 
         $this->_setPageTitle('Pages', 'manage static pages.');
         $this->_setBodyClass($this->bodyClass);
+
+        $this->loadAdminMenu('pages');
     }
 
     public function getIndex(Request $request)
@@ -68,9 +70,13 @@ class AdminPageController extends BaseAdminController
         $orderType = $request->get('order')[0]['dir'];
 
         $getByFields = [];
-        if($request->get('global_title', null))
+        if($request->get('global_title', null) != null)
         {
             $getByFields['global_title'] = ['compare' => 'LIKE', 'value' => $request->get('global_title')];
+        }
+        if($request->get('status', null) != null)
+        {
+            $getByFields['status'] = ['compare' => '=', 'value' => $request->get('status')];
         }
 
         $items = Page::searchBy($getByFields, [$orderBy => $orderType], true, $limit);

@@ -16,7 +16,8 @@
 | START Routes for Admin actions
 |--------------------------------------------------------------------------
 */
-$adminCpAccess = 'admin';
+$adminCpAccess = \Config::get('app.adminCpAccess');
+
 view()->share('adminCpAccess', $adminCpAccess);
 $router->group(['namespace' => 'Admin', 'prefix' => $adminCpAccess], function($router) use($adminCpAccess) {
     /*Auth*/
@@ -40,6 +41,9 @@ $router->group(['namespace' => 'Admin', 'prefix' => $adminCpAccess], function($r
 
     /*Settings*/
     $router->controller('settings', 'AdminSettingController');
+
+    /*Menus*/
+    $router->controller('menus', 'AdminMenuController');
 
     /*Other*/
     $router->controller('languages', 'AdminLanguageController');

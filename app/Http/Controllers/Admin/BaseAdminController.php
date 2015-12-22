@@ -1,6 +1,6 @@
-<?php
+<?php namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers\Admin;
+use Acme;
 
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
@@ -15,6 +15,8 @@ abstract class BaseAdminController extends BaseController
     {
         parent::__construct();
         $this->middleware('auth');
+
+        $this->loadAdminMenu();
     }
 
     public function _setPageTitle($title, $subTitle = '')
@@ -30,5 +32,37 @@ abstract class BaseAdminController extends BaseController
         view()->share([
             'bodyClass' => $class
         ]);
+    }
+
+    protected function loadAdminMenu($menuActive = '')
+    {
+        $currentUser = $this->loggedInUser;
+
+//        $userRoles = ($currentUser->userRole->slug == 'webmaster') ? $currentUser->userRole->slug : array();
+//        if(is_array($userRoles))
+//        {
+//            $userRoles = $currentUser->menuNode()->getRelatedIds()->toArray();
+//        }
+        $menu = new Acme\CmsMenu();
+        $menu->args = array(
+            'menuName' => 'admin-menu',
+            'menuClass' => 'page-sidebar-menu page-header-fixed',
+            'container' => 'div',
+            'containerClass' => 'page-sidebar navbar-collapse collapse',
+            'containerId' => '',
+            'containerTag' => 'ul',
+            'childTag' => 'li',
+            'itemHasChildrenClass' => '',
+            'subMenuClass' => 'sub-menu',
+            'menuActive' => [
+                'type' => 'customLink',
+                'related_id' => $menuActive
+            ],
+            'activeClass' => 'active',
+            //'userRoles' => $userRoles,
+            'userRoles' => 'webmaster',
+            'isAdminMenu' => true,
+        );
+        view()->share('CMSMenuHtml', $menu->getNavMenu());
     }
 }

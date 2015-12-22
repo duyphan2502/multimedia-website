@@ -52,6 +52,6 @@ class PageContent extends AbstractModel {
      */
     public function language()
     {
-        return $this->belongsTo('App\Language', 'language_id');
+        return $this->belongsTo('App\Models\Language', 'language_id');
     }
 }

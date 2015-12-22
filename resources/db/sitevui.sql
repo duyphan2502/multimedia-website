@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-12-21 08:57:31
+Date: 2015-12-22 18:54:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,46 +33,46 @@ CREATE TABLE `categories` (
 -- ----------------------------
 -- Records of categories
 -- ----------------------------
-INSERT INTO `categories` VALUES ('1687', '0', 'Parent category - 1', '0', null, '2015-12-19 05:24:54', '2015-12-21 01:46:50');
-INSERT INTO `categories` VALUES ('1688', '1687', 'Test', '0', null, '2015-12-19 05:24:54', '2015-12-21 01:52:24');
-INSERT INTO `categories` VALUES ('1689', '1687', 'Child category - 2 - of Parent category - 1', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1690', '1687', 'Child category - 3 - of Parent category - 1', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1691', '0', 'Parent category - 2', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1692', '1691', 'Child category - 1 - of Parent category - 2', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1693', '1691', 'Child category - 2 - of Parent category - 2', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1694', '1691', 'Child category - 3 - of Parent category - 2', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1695', '0', 'Parent category - 3', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1696', '1695', 'Child category - 1 - of Parent category - 3', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1697', '1695', 'Child category - 2 - of Parent category - 3', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1698', '1695', 'Child category - 3 - of Parent category - 3', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1699', '0', 'Parent category - 4', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1700', '1699', 'Child category - 1 - of Parent category - 4', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1701', '1699', 'Child category - 2 - of Parent category - 4', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1702', '1699', 'Child category - 3 - of Parent category - 4', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1703', '0', 'Parent category - 5', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1704', '1703', 'Child category - 1 - of Parent category - 5', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1705', '1703', 'Child category - 2 - of Parent category - 5', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1706', '1703', 'Child category - 3 - of Parent category - 5', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1707', '0', 'Parent category - 6', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1708', '1707', 'Child category - 1 - of Parent category - 6', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1709', '1707', 'Child category - 2 - of Parent category - 6', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1710', '1707', 'Child category - 3 - of Parent category - 6', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1711', '0', 'Parent category - 7', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1712', '1711', 'Child category - 1 - of Parent category - 7', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1713', '1711', 'Child category - 2 - of Parent category - 7', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1714', '1711', 'Child category - 3 - of Parent category - 7', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1715', '0', 'Parent category - 8', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1716', '1715', 'Child category - 1 - of Parent category - 8', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1717', '1715', 'Child category - 2 - of Parent category - 8', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1718', '1715', 'Child category - 3 - of Parent category - 8', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1719', '0', 'Parent category - 9', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1720', '1719', 'Child category - 1 - of Parent category - 9', '0', null, '2015-12-19 05:24:54', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1721', '1719', 'Child category - 2 - of Parent category - 9', '0', null, '2015-12-19 05:24:55', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1722', '1719', 'Child category - 3 - of Parent category - 9', '0', null, '2015-12-19 05:24:55', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1723', '0', 'Parent category - 10', '0', null, '2015-12-19 05:24:55', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1724', '1723', 'Child category - 1 - of Parent category - 10', '0', null, '2015-12-19 05:24:55', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1725', '1723', 'Child category - 2 - of Parent category - 10', '0', null, '2015-12-19 05:24:55', '2015-12-20 09:02:12');
-INSERT INTO `categories` VALUES ('1726', '1723', 'Child category - 3 - of Parent category - 10', '0', null, '2015-12-19 05:24:55', '2015-12-20 09:02:12');
+INSERT INTO `categories` VALUES ('1687', '0', 'Parent category - 1', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1688', '1687', 'Test', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1689', '1687', 'Child category - 2 - of Parent category - 1', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1690', '1687', 'Child category - 3 - of Parent category - 1', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1691', '0', 'Parent category - 2', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1692', '1691', 'Child category - 1 - of Parent category - 2', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1693', '1691', 'Child category - 2 - of Parent category - 2', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1694', '1691', 'Child category - 3 - of Parent category - 2', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1695', '0', 'Parent category - 3', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1696', '1695', 'Child category - 1 - of Parent category - 3', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1697', '1695', 'Child category - 2 - of Parent category - 3', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1698', '1695', 'Child category - 3 - of Parent category - 3', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1699', '0', 'Parent category - 4', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1700', '1699', 'Child category - 1 - of Parent category - 4', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1701', '1699', 'Child category - 2 - of Parent category - 4', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1702', '1699', 'Child category - 3 - of Parent category - 4', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1703', '0', 'Parent category - 5', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1704', '1703', 'Child category - 1 - of Parent category - 5', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1705', '1703', 'Child category - 2 - of Parent category - 5', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1706', '1703', 'Child category - 3 - of Parent category - 5', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1707', '0', 'Parent category - 6', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1708', '1707', 'Child category - 1 - of Parent category - 6', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1709', '1707', 'Child category - 2 - of Parent category - 6', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1710', '1707', 'Child category - 3 - of Parent category - 6', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1711', '0', 'Parent category - 7', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1712', '1711', 'Child category - 1 - of Parent category - 7', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1713', '1711', 'Child category - 2 - of Parent category - 7', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1714', '1711', 'Child category - 3 - of Parent category - 7', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1715', '0', 'Parent category - 8', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1716', '1715', 'Child category - 1 - of Parent category - 8', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1717', '1715', 'Child category - 2 - of Parent category - 8', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1718', '1715', 'Child category - 3 - of Parent category - 8', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1719', '0', 'Parent category - 9', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1720', '1719', 'Child category - 1 - of Parent category - 9', '1', null, '2015-12-19 05:24:54', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1721', '1719', 'Child category - 2 - of Parent category - 9', '1', null, '2015-12-19 05:24:55', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1722', '1719', 'Child category - 3 - of Parent category - 9', '1', null, '2015-12-19 05:24:55', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1723', '0', 'Parent category - 10', '1', null, '2015-12-19 05:24:55', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1724', '1723', 'Child category - 1 - of Parent category - 10', '1', null, '2015-12-19 05:24:55', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1725', '1723', 'Child category - 2 - of Parent category - 10', '1', null, '2015-12-19 05:24:55', '2015-12-21 03:05:59');
+INSERT INTO `categories` VALUES ('1726', '1723', 'Child category - 3 - of Parent category - 10', '1', null, '2015-12-19 05:24:55', '2015-12-21 03:05:59');
 
 -- ----------------------------
 -- Table structure for `categories_posts`
@@ -4529,6 +4529,74 @@ INSERT INTO `languages` VALUES ('61', 'zh-hans', 'Chinese (Simplified)', '1', 'z
 INSERT INTO `languages` VALUES ('62', 'zu', 'Zulu', '0', '', '', '0', null, '', '0', '0000-00-00 00:00:00', '2015-09-13 02:03:00');
 INSERT INTO `languages` VALUES ('63', 'zh-hant', 'Chinese (Traditional)', '1', 'zh_TW', 'zh-TW', '0', null, '', '0', '0000-00-00 00:00:00', '2015-09-13 02:03:00');
 INSERT INTO `languages` VALUES ('64', 'ms', 'Malay', '0', 'ms_MY', 'ms-MY', '0', null, '', '0', '0000-00-00 00:00:00', '2015-09-13 02:03:00');
+
+-- ----------------------------
+-- Table structure for `menus`
+-- ----------------------------
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE `menus` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of menus
+-- ----------------------------
+INSERT INTO `menus` VALUES ('2', 'Custom fields', 'admin-menu', '1', '2014-10-25 01:26:30', '2015-12-22 09:35:21');
+INSERT INTO `menus` VALUES ('3', 'Main menu', 'main-menu', '1', '2015-05-17 21:14:02', '2015-05-17 21:14:02');
+INSERT INTO `menus` VALUES ('4', 'Footer menu', 'footer-menu', '1', '2015-05-30 19:40:39', '2015-05-30 19:40:39');
+INSERT INTO `menus` VALUES ('5', 'Website support', 'website-support', '1', '2015-12-16 09:31:27', '2015-12-16 09:31:27');
+
+-- ----------------------------
+-- Table structure for `menu_nodes`
+-- ----------------------------
+DROP TABLE IF EXISTS `menu_nodes`;
+CREATE TABLE `menu_nodes` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `menu_id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `related_id` int(11) DEFAULT NULL,
+  `type` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `icon_font` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `position` int(11) DEFAULT NULL,
+  `title` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `css_class` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=449 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of menu_nodes
+-- ----------------------------
+INSERT INTO `menu_nodes` VALUES ('272', '2', '0', '0', 'customLink', 'dashboard', 'fa fa-home', '0', 'Dashboard', 'start', '2015-01-09 07:34:11', '2015-01-26 15:08:30');
+INSERT INTO `menu_nodes` VALUES ('273', '2', '301', '0', 'customLink', 'category', 'fa fa-sitemap', '1', 'Post Categories', '', '2015-01-09 07:34:11', '2015-12-22 09:43:22');
+INSERT INTO `menu_nodes` VALUES ('280', '2', '0', '0', 'customLink', 'custom-field', 'fa fa-edit', '12', 'Custom fields', '', '2015-01-09 07:34:11', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('283', '2', '0', '0', 'customLink', 'pages', 'fa fa-tasks', '3', 'Pages', '', '2015-01-09 07:34:11', '2015-12-22 11:30:12');
+INSERT INTO `menu_nodes` VALUES ('291', '2', '403', '0', 'customLink', 'options', 'fa fa-gear', '1', 'Options', '', '2015-01-09 07:34:11', '2015-12-22 09:52:50');
+INSERT INTO `menu_nodes` VALUES ('292', '2', '0', '0', 'customLink', 'user', 'fa fa-users', '9', 'Users', '', '2015-01-09 07:34:11', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('297', '2', '403', '0', 'customLink', 'menus', 'fa fa-bars', '0', 'Menus', '', '2015-01-09 07:34:11', '2015-12-22 11:30:12');
+INSERT INTO `menu_nodes` VALUES ('300', '2', '301', '0', 'customLink', 'post', 'icon-layers', '0', 'Posts', '', '2015-03-14 16:47:08', '2015-12-22 09:43:22');
+INSERT INTO `menu_nodes` VALUES ('301', '2', '0', '0', 'customLink', 'post', 'icon-layers', '1', 'Posts', '', '2015-03-14 16:47:08', '2015-12-22 09:48:57');
+INSERT INTO `menu_nodes` VALUES ('330', '2', '331', '0', 'customLink', 'product', 'fa fa-cubes', '0', 'Products', '', '2015-04-02 15:54:31', '2015-12-22 09:48:57');
+INSERT INTO `menu_nodes` VALUES ('331', '2', '0', '0', 'customLink', 'product', 'fa fa-cubes', '2', 'Products', '', '2015-04-02 15:54:31', '2015-12-22 09:48:57');
+INSERT INTO `menu_nodes` VALUES ('332', '2', '331', '0', 'customLink', 'product-category', 'fa fa-sitemap', '1', 'Product categories', '', '2015-04-02 15:54:31', '2015-12-22 09:48:57');
+INSERT INTO `menu_nodes` VALUES ('360', '2', '0', '0', 'customLink', 'order', 'fa fa-fax', '8', 'Orders', '', '2015-04-27 15:51:35', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('396', '2', '0', '0', 'customLink', 'comment', 'fa fa-comments', '7', 'Comments', '', '2015-06-10 19:53:59', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('402', '2', '403', '0', 'customLink', 'options/language', 'fa fa-language', '3', 'Languages', '', '2015-09-13 01:17:35', '2015-12-22 09:52:50');
+INSERT INTO `menu_nodes` VALUES ('403', '2', '0', '0', 'customLink', 'options', 'fa fa-cogs', '11', 'Settings', '', '2015-09-13 01:22:25', '2015-12-22 11:43:22');
+INSERT INTO `menu_nodes` VALUES ('408', '2', '0', '0', 'customLink', 'testimonial', 'fa fa-comments', '4', 'Testimonials', '', '2015-12-10 09:40:29', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('409', '2', '0', '0', 'customLink', 'subscribe-email', 'fa fa-envelope', '5', 'Subscribe Emails', '', '2015-12-10 10:45:29', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('410', '2', '403', '0', 'customLink', 'options/banners', 'fa fa-image', '2', 'Banners', '', '2015-12-10 11:36:23', '2015-12-22 09:52:50');
+INSERT INTO `menu_nodes` VALUES ('411', '2', '0', '0', 'customLink', 'contact', 'fa fa-suitcase', '6', 'Contacts', '', '2015-12-10 13:30:52', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('412', '2', '0', '0', 'customLink', 'country-province', 'fa fa-building', '10', 'Country/Province', '', '2015-12-10 19:12:07', '2015-12-22 09:54:34');
+INSERT INTO `menu_nodes` VALUES ('413', '2', '331', '0', 'customLink', 'coupon', 'fa fa-code', '2', 'Coupons', '', '2015-12-12 20:28:54', '2015-12-22 09:54:34');
 
 -- ----------------------------
 -- Table structure for `pages`

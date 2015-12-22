@@ -53,6 +53,11 @@ class Page extends AbstractModel
         'tags'
     ];
 
+    public function pageContent()
+    {
+        return $this->hasMany('App\Models\PageContent', 'page_id');
+    }
+
     public static function getPageById($id, $languageId = 0)
     {
         return static::join('page_contents', 'pages.id', '=', 'page_contents.page_id')

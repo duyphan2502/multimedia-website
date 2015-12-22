@@ -16,6 +16,8 @@ class AdminDashboardController extends BaseAdminController
 
         $this->_setPageTitle('Dashboard', 'dashboard & statistics');
         $this->_setBodyClass($this->bodyClass);
+
+        $this->loadAdminMenu('dashboard');
     }
 
     public function getIndex(Request $request)

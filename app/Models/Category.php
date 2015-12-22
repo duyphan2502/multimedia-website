@@ -54,6 +54,11 @@ class Category extends AbstractModel
         'tags'
     ];
 
+    public function categoryContent()
+    {
+        return $this->hasMany('App\Models\CategoryContent', 'category_id');
+    }
+
     public static function getCategoryById($id, $languageId = 0)
     {
         return static::join('category_contents', 'categories.id', '=', 'category_contents.category_id')
