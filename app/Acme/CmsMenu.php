@@ -150,7 +150,7 @@ class CmsMenu
                 $linkClass = '';
                 if ($item_args['isAdminMenu'] == true)
                 {
-                    $linkClass = ' nav-link ';
+                    $linkClass = ' nav-link nav-toggle ';
                     $activeClass .= ' nav-item ';
                     $menu_icon = '<i class="' . $row->icon_font . '"></i> <span class="title">' . $menu_title . '</span><span class="selected"></span>' . $arrow;
                 }
