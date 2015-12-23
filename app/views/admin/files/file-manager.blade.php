@@ -23,7 +23,7 @@
     <script src="{{ asset('assets/admin/core/third_party/elfinder/js/elfinder.min.js') }}"></script>
 
     <!-- elFinder translation (OPTIONAL) -->
-    <script src="{{ asset('assets/admin/core/third_party/elfinder/js/i18n/elfinder.vi.js') }}"></script>
+    <script src="{{ asset('assets/admin/core/third_party/elfinder/js/i18n/elfinder.vn.js') }}"></script>
 
     <!-- elFinder initialization (REQUIRED) -->
     <script type="text/javascript" charset="utf-8">

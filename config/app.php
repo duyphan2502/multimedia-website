@@ -147,6 +147,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\Elfinder\ElfinderServiceProvider::class
+
     ],
 
     /*
