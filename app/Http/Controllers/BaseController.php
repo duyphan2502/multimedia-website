@@ -23,13 +23,7 @@ abstract class BaseController extends Controller
 
         $this->defaultLanguageId = (isset($this->settings['default_language']) ? $this->settings['default_language'] : 59);
 
-        /*Get logged in user*/
-        if(auth()->user())
-        {
-            $this->loggedInUser = auth()->user();
-            view()->share('loggedInUser', $this->loggedInUser);
-            //$this->loggedInUserRole = $this->loggedInUser->userRole->slug;
-        }
+
     }
 
     protected function viewAdmin($view, $data = [])

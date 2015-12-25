@@ -17,6 +17,14 @@ abstract class BaseAdminController extends BaseController
         $this->middleware('auth');
 
         $this->loadAdminMenu();
+
+        /*Get logged in user*/
+        if(auth()->user())
+        {
+            $this->loggedInUser = auth()->user();
+            view()->share('loggedInUser', $this->loggedInUser);
+            //$this->loggedInUserRole = $this->loggedInUser->userRole->slug;
+        }
     }
 
     public function _setPageTitle($title, $subTitle = '')
