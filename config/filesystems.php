@@ -40,6 +40,11 @@ return [
     | been setup for each driver as an example of the required options.
     |
     */
+    'public' => [
+        'driver' => 'local',
+        'root'   => base_path().'/public',
+    ],
+
 
     'disks' => [
 
