@@ -19,6 +19,7 @@ abstract class BaseController extends Controller
     protected function __construct()
     {
         $this->adminCpAccess = \Config::get('app.adminCpAccess');
+        view()->share('adminCpAccess', $this->adminCpAccess);
         $this->settings = Models\Setting::getAllSettings();
 
         $this->defaultLanguageId = (isset($this->settings['default_language']) ? $this->settings['default_language'] : 59);
@@ -102,5 +103,20 @@ abstract class BaseController extends Controller
             'successMessages' => $this->successMessages,
             'warningMessages' => $this->warningMessages,
         ];
+    }
+
+    public function _setLoggedInAdminUser($user)
+    {
+        session(['adminAuthUser' => $user]);
+    }
+
+    public function _getLoggedInAdminUser()
+    {
+        return session('adminAuthUser', null);
+    }
+
+    public function _unsetLoggedInAdminUser()
+    {
+        session(['adminAuthUser' => null]);
     }
 }

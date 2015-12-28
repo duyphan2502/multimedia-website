@@ -11,10 +11,14 @@ use Carbon\Carbon;
 
 abstract class BaseAdminController extends BaseController
 {
+    var $loggedInAdminUser;
     public function __construct()
     {
         parent::__construct();
         $this->middleware('auth');
+
+        $this->loggedInAdminUser = $this->_getLoggedInAdminUser();
+        view()->share(['loggedInAdminUser' => $this->loggedInAdminUser]);
 
         $this->loadAdminMenu();
     }

@@ -2,16 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Models;
-
-use Illuminate\Support\Facades\Auth;
-
-use Carbon\Carbon;
-
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class Authenticate
+class Guest
 {
     /**
      * The Guard implementation.
@@ -40,10 +34,11 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if(!session('adminAuthUser'))
+        if(session('adminAuthUser') != null)
         {
-            return redirect()->guest('admin/auth/login');
+            return redirect('/admin/dashboard');
         }
+
         return $next($request);
     }
 }

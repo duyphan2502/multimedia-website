@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
+use App\Models\AdminUser;
 
 use App\Http\Controllers\BaseController;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -27,10 +29,11 @@ class AdminAuthController extends BaseController
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    var $username = 'email';
+    var $username = 'username';
     var $loginPath = 'auth';
     var $redirectTo = '/admin/dashboard';
     var $redirectPath = '/admin/dashboard';
+    var $redirectToLoginPage = '/admin/auth/login';
 
     /**
      * Create a new authentication controller instance.
@@ -41,8 +44,7 @@ class AdminAuthController extends BaseController
     {
         parent::__construct();
 
-        $this->middleware('guest', ['except' => ['getLogout', 'postLogin', 'postIndex', 'getLogin']]);
-
+        $this->middleware('guest', ['except' => ['getLogout', 'postLogin', 'getLogin']]);
     }
 
     /**
@@ -67,9 +69,8 @@ class AdminAuthController extends BaseController
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        return AdminUser::create([
+            'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
     }
@@ -81,15 +82,11 @@ class AdminAuthController extends BaseController
 
     public function getLogin()
     {
+        $this->_unsetLoggedInAdminUser();
         return view('admin.auth.login');
     }
 
-    public function postIndex(Request $request)
-    {
-        return $this->postLogin($request);
-    }
-
-    public function postLogin(Request $request)
+    public function postLogin(Request $request, AdminUser $adminUser)
     {
         $this->validate($request, [
             $this->loginUsername() => 'required', 'password' => 'required',
@@ -106,8 +103,13 @@ class AdminAuthController extends BaseController
 
         $credentials = $this->getCredentials($request);
 
-        if (Auth::attempt($credentials, $request->has('remember'))) {
-            return $this->handleUserWasAuthenticated($request, $throttles);
+        if ($this->_checkAdminUser($credentials, $adminUser))
+        {
+            if ($throttles)
+            {
+                $this->clearLoginAttempts($request);
+            }
+            return $this->authenticated();
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -122,5 +124,25 @@ class AdminAuthController extends BaseController
             ->with('errorMessages', [
                 $this->loginUsername() => $this->getFailedLoginMessage(),
             ]);
+    }
+
+    public function getLogout()
+    {
+        $this->_unsetLoggedInAdminUser();
+        return redirect()->to($this->redirectToLoginPage)->with([
+            'infoMessages' => ['You now logged out']
+        ]);
+    }
+
+    public function _checkAdminUser($credentials, $adminUser)
+    {
+        $user = $adminUser->where('username', '=', $credentials['username'])->first();
+        if(!$user) return false;
+
+        if(!Hash::check($credentials['password'], $user->password)) return false;
+
+        $this->_setLoggedInAdminUser($user);
+
+        return true;
     }
 }
