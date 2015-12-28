@@ -12,9 +12,9 @@ $(document).ready(function(){
                 minlength: 5,
                 required: true
             },
-            email: {
+            username: {
                 required: true,
-                email: true
+                minlength: 5
             }
         },
 

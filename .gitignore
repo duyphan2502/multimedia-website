@@ -2,7 +2,6 @@
 .env.*.php
 .env.php
 .env
-/vendor
 /bower_components
 /.idea
 /node_modules

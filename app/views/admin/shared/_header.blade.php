@@ -29,7 +29,7 @@
                     <li class="divider"></li>
                     </li>
                     <li>
-                        <a href="#/login">
+                        <a href="{{ asset($adminCpAccess.'/auth/logout') }}">
                             <i class="icon-key"></i> Log Out </a>
                     </li>
                 </ul>
