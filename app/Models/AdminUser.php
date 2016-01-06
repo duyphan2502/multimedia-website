@@ -6,6 +6,8 @@ use App\Models;
 use App\Models\AbstractModel;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -28,4 +30,15 @@ class AdminUser extends AbstractModel implements AuthenticatableContract, Author
     protected $table = 'admin_users';
 
     protected $primaryKey = 'id';
+
+    public static function authenticate($username, $password)
+    {
+        $user = static::getBy([
+            'username' => $username,
+            'status' => 1
+        ]);
+        if(!$user) return null;
+        if(!Hash::check($password, $user->password)) return null;
+        return $user;
+    }
 }

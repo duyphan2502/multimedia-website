@@ -29,11 +29,8 @@ class AdminAuthController extends BaseController
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    var $username = 'username';
-    var $loginPath = 'auth';
-    var $redirectTo = '/admin/dashboard';
-    var $redirectPath = '/admin/dashboard';
-    var $redirectToLoginPage = '/admin/auth/login';
+    var $username, $loginPath, $redirectTo, $redirectPath, $redirectToLoginPage;
+
 
     /**
      * Create a new authentication controller instance.
@@ -43,6 +40,12 @@ class AdminAuthController extends BaseController
     public function __construct()
     {
         parent::__construct();
+
+        $this->username = 'username';
+        $this->loginPath = 'auth';
+        $this->redirectTo = '/'.$this->adminCpAccess.'/dashboard';
+        $this->redirectPath = '/'.$this->adminCpAccess.'/dashboard';
+        $this->redirectToLoginPage = '/'.$this->adminCpAccess.'/auth/login';
 
         $this->middleware('guest', ['except' => ['getLogout', 'postLogin', 'getLogin']]);
     }
@@ -77,7 +80,9 @@ class AdminAuthController extends BaseController
 
     public function authenticated()
     {
-        return redirect()->to($this->redirectTo)->with('successMessages', ['You logged in']);
+        $this->_setFlashMessage('You logged in', 'success');
+        $this->_showFlashMessages();
+        return redirect()->to($this->redirectTo);
     }
 
     public function getLogin()
@@ -103,12 +108,14 @@ class AdminAuthController extends BaseController
 
         $credentials = $this->getCredentials($request);
 
-        if ($this->_checkAdminUser($credentials, $adminUser))
+        $checkAdminUser = $this->_checkAdminUser($credentials, $adminUser);
+        if($checkAdminUser != null)
         {
             if ($throttles)
             {
                 $this->clearLoginAttempts($request);
             }
+            $this->_setLoggedInAdminUser($checkAdminUser);
             return $this->authenticated();
         }
 
@@ -129,20 +136,15 @@ class AdminAuthController extends BaseController
     public function getLogout()
     {
         $this->_unsetLoggedInAdminUser();
-        return redirect()->to($this->redirectToLoginPage)->with([
-            'infoMessages' => ['You now logged out']
-        ]);
+        $this->_setFlashMessage('You now logged out', 'info');
+        $this->_showFlashMessages();
+        return redirect()->to($this->redirectToLoginPage);
     }
 
     public function _checkAdminUser($credentials, $adminUser)
     {
-        $user = $adminUser->where('username', '=', $credentials['username'])->first();
-        if(!$user) return false;
+        $user = $adminUser->authenticate($credentials['username'], $credentials['password']);
 
-        if(!Hash::check($credentials['password'], $user->password)) return false;
-
-        $this->_setLoggedInAdminUser($user);
-
-        return true;
+        return $user;
     }
 }

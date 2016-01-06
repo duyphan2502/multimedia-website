@@ -34,9 +34,10 @@ class Guest
      */
     public function handle($request, Closure $next)
     {
+        $adminCpAccess = \Config::get('app.adminCpAccess');
         if(session('adminAuthUser') != null)
         {
-            return redirect('/admin/dashboard');
+            return redirect('/'.$adminCpAccess.'/dashboard');
         }
 
         return $next($request);

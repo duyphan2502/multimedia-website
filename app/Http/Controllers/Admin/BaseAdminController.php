@@ -12,6 +12,7 @@ use Carbon\Carbon;
 abstract class BaseAdminController extends BaseController
 {
     var $loggedInAdminUser;
+
     public function __construct()
     {
         parent::__construct();
@@ -21,17 +22,9 @@ abstract class BaseAdminController extends BaseController
         view()->share(['loggedInAdminUser' => $this->loggedInAdminUser]);
 
         $this->loadAdminMenu();
-
-        /*Get logged in user*/
-        if(auth()->user())
-        {
-            $this->loggedInUser = auth()->user();
-            view()->share('loggedInUser', $this->loggedInUser);
-            //$this->loggedInUserRole = $this->loggedInUser->userRole->slug;
-        }
     }
 
-    public function _setPageTitle($title, $subTitle = '')
+    protected function _setPageTitle($title, $subTitle = '')
     {
         view()->share([
             'pageTitle' => $title,
@@ -39,7 +32,7 @@ abstract class BaseAdminController extends BaseController
         ]);
     }
 
-    public function _setBodyClass($class)
+    protected function _setBodyClass($class)
     {
         view()->share([
             'bodyClass' => $class

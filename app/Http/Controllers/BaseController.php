@@ -14,7 +14,9 @@ abstract class BaseController extends Controller
 
     protected $loggedInUser = null;
 
-    protected $errorMessages = [], $infoMessages = [], $successMessages = [], $warningMessages = [];
+    protected $settings;
+
+    private $errorMessages = [], $infoMessages = [], $successMessages = [], $warningMessages = [];
     
     protected function __construct()
     {
@@ -24,7 +26,14 @@ abstract class BaseController extends Controller
 
         $this->defaultLanguageId = (isset($this->settings['default_language']) ? $this->settings['default_language'] : 59);
 
+        /*Get logged in user*/
+        if(auth()->user())
+        {
+            $this->loggedInUser = auth()->user();
 
+            //$this->loggedInUserRole = $this->loggedInUser->userRole->slug;
+        }
+        view()->share('loggedInUser', $this->loggedInUser);
     }
 
     protected function viewAdmin($view, $data = [])
@@ -86,14 +95,6 @@ abstract class BaseController extends Controller
         }
     }
 
-    protected function _showFlashMessages()
-    {
-        Session::flash('errorMessages', $this->errorMessages);
-        Session::flash('infoMessages', $this->infoMessages);
-        Session::flash('successMessages', $this->successMessages);
-        Session::flash('warningMessages', $this->warningMessages);
-    }
-
     protected function _getFlashMessages()
     {
         return [
@@ -104,17 +105,25 @@ abstract class BaseController extends Controller
         ];
     }
 
-    public function _setLoggedInAdminUser($user)
+    protected function _showFlashMessages()
+    {
+        Session::flash('errorMessages', $this->errorMessages);
+        Session::flash('infoMessages', $this->infoMessages);
+        Session::flash('successMessages', $this->successMessages);
+        Session::flash('warningMessages', $this->warningMessages);
+    }
+
+    protected function _setLoggedInAdminUser($user)
     {
         session(['adminAuthUser' => $user]);
     }
 
-    public function _getLoggedInAdminUser()
+    protected function _getLoggedInAdminUser()
     {
         return session('adminAuthUser', null);
     }
 
-    public function _unsetLoggedInAdminUser()
+    protected function _unsetLoggedInAdminUser()
     {
         session(['adminAuthUser' => null]);
     }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-12-28 17:15:34
+Date: 2016-01-06 17:26:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,8 +37,7 @@ CREATE TABLE `admin_users` (
 -- ----------------------------
 -- Records of admin_users
 -- ----------------------------
-INSERT INTO `admin_users` VALUES ('1', '1', 'webmaster', '$2y$10$OhUkdcdm5JlAnwr1s2VO/eAxpKiU66wLMVqsiQW9yesyheGs7/Fj6', '0', 'aUz7m68uo4AqmDEjBQDF47pfshxSKvULJs4WqBCnPp5ezEbNPdTRpS8v862c', '749f258446f1d3bc08c9b669b3bb1a0f', '2015-12-22 01:33:21', '0000-00-00 00:00:00', '2014-10-14 00:10:13', '2015-12-21 01:33:21');
-INSERT INTO `admin_users` VALUES ('15', '3', 'admin@vto.com', '$2y$10$qZOddgitcKNDydQ2C/VDd.ki9ip/tzizJApG.4JVHhD5hyaUt3Bke', '0', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-05-27 20:58:15', '2015-09-19 06:37:17');
+INSERT INTO `admin_users` VALUES ('1', '1', 'webmaster', '$2y$10$OhUkdcdm5JlAnwr1s2VO/eAxpKiU66wLMVqsiQW9yesyheGs7/Fj6', '1', 'aUz7m68uo4AqmDEjBQDF47pfshxSKvULJs4WqBCnPp5ezEbNPdTRpS8v862c', '749f258446f1d3bc08c9b669b3bb1a0f', '2015-12-22 01:33:21', '0000-00-00 00:00:00', '2014-10-14 00:10:13', '2015-12-21 01:33:21');
 
 -- ----------------------------
 -- Table structure for `categories`
