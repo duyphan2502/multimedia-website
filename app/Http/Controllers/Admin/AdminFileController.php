@@ -19,7 +19,7 @@ class AdminFileController extends BaseAdminController
 
     public function getFileManager(Request $request, $user_id = null)
     {
-        return view('elfinder', $this->getViewVars($user_id));
+        return $this->viewAdmin('file.file-manager', $this->getViewVars($user_id));
     }
 
     protected function getViewVars($user_id = null)

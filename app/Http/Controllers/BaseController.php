@@ -37,6 +37,11 @@ abstract class BaseController extends Controller
         return view('front.'.$view, $data);
     }
 
+    protected function viewVendor($view, $data = [])
+    {
+        return view('vendor.'.$view, $data);
+    }
+
     protected function _showErrorPage($errorCode = 404, $message = null)
     {
         return abort($errorCode, $message);
