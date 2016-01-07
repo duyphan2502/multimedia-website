@@ -41,7 +41,7 @@ abstract class BaseAdminController extends BaseController
 
     protected function loadAdminMenu($menuActive = '')
     {
-        $currentUser = $this->loggedInUser;
+        $currentUser = $this->loggedInAdminUser;
 
 //        $userRoles = ($currentUser->userRole->slug == 'webmaster') ? $currentUser->userRole->slug : array();
 //        if(is_array($userRoles))
